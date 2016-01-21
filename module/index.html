@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>海鲜街</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<style>
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+			
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+			
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			
+			.oa-contact-content {
+				width: 100%;
+			}
+			
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			
+			.oa-contact-name,
+			oa-contact-position {
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+			<!-- 菜单容器 -->
+			<aside id="offCanvasSide" class="mui-off-canvas-left" style="background-color:#DDDDDD;filter:alpha(opacity=90); -moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; ">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="content">
+							<p style="margin: 10px 15px;">
+								<a><span id="offCanvasHide" class="mui-icon mui-icon-arrowleft"></span></a>
+							</p>
+
+						</div>
+						<div class="title">产品分类：</div>
+
+						<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted" style="background-color:#DDDDDD;color: #666666;">
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									鱼类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									虾类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									蟹类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									贝类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									刺身类
+								</a>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+				<header class="mui-bar mui-bar-nav">
+					<div>
+						<span style="float:right;margin-right: 10px;line-height: 2.5;color:#555555;font-size: 16px;" id="ordercenter">| 订单中心</span>
+
+						<span style="float:right;margin-right: 5px;color:#555555;" class="mui-icon iconfont icon-gouwuche" id="prodcutCart"><span class="mui-badge" id="productCartNum"></span></span>
+					</div>
+				</header>
+
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-input-row mui-search">
+							<input type="search" class="mui-input-clear" placeholder="">
+						</div>
+						<img width="100%" src="../images/haixiantitle.jpg">
+						<ul class="mui-table-view mui-grid-view" id="produectList">
+						</ul>
+					</div>
+				</div>
+				<nav class="mui-bar mui-bar-tab">
+
+					<a class="mui-tab-item" href="#tabbar-with-chat">
+						<span class="mui-icon mui-icon-home"> </span>
+						<span class="mui-tab-label">商城主页</span>
+					</a>
+					<a class="mui-tab-item" href="#" id="offCanvasShow">
+						<span class="mui-icon mui-icon-star"></span>
+						<span class="mui-tab-label">分类</span>
+					</a>
+					<a class="mui-tab-item" href="#tabbar-with-map">
+						<span class="mui-icon mui-icon-gear"></span>
+						<span class="mui-tab-label">会员中心</span>
+					</a>
+				</nav>
+			</div>
+		</div>
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-1.10.1.min.js"></script>
+	<script src="../js/mui.lazyload.js"></script>
+	<script src="../js/mui.lazyload.img.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		initPullEvent();
+		initCategorySelect();
+		initTapEvent();
+		//设置所有事件
+		function initTapEvent() {
+			document.getElementById("prodcutCart").addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'producatCart',
+					url: 'procart.html'
+				});
+			});
+			document.getElementById("ordercenter").addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'ordercenter',
+					url: 'ordercenter.html'
+				});
+			});
+		}
+
+		function initPullEvent() {
+			mui.init({
+				pullRefresh: {
+					container: '#offCanvasContentScroll',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#offCanvasContentScroll').pullRefresh().endPullupToRefresh((++count > 4)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.pulltable');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = 1; i < 5; i++) {
+						var html = '<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">' +
+							'<div style="margin:5px 5px 5px -2px;">' +
+							'<a href="#">' +
+							'<img class="mui-media-object productimg" data="' + i + '" src="../images/haixian' + i + '.jpg">' +
+							'<div class="mui-media-body" style="text-align:left;margin:10px 0px 5px 5px;float:left;font-size: 14px;font-weight: 400; ">幸福就是可以一起睡觉</div>' +
+							'</a> ' +
+							'<span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400; ">￥130</span>' +
+							'<span style="margin:10px 10px 10px;float:right">' +
+							'<button type="button" class="mui-btn mui-btn-warning" ' +
+							'style="width: 50px;height: 28px;font-size: 12px">' +
+							'订购' +
+							'</button>' +
+							'</span>' +
+							'</div>' +
+							'</li>';
+						$('#produectList').append(html);
+					}
+					var productimgs = document.querySelectorAll(".productimg");
+					for (var i = 0; i < productimgs.length; i++) {
+						var data = productimgs[i].getAttribute("data");
+						var jumpUrl = 'prodetail.html?data=' + data;
+						productimgs[i].addEventListener('tap', function() {
+							mui.openWindow({
+								id: 'detail',
+								url: jumpUrl
+							});
+						});
+					}
+				}, 1000);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#offCanvasContentScroll').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#offCanvasContentScroll').pullRefresh().pullupLoading();
+				});
+			}
+		}
+
+		function initCategorySelect() {
+			//主界面‘显示侧滑菜单’按钮的点击事件
+			//侧滑容器父节点
+			var offCanvasWrapper = mui('#offCanvasWrapper');
+			//主界面容器
+			var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+			//菜单容器
+			var offCanvasSide = document.getElementById("offCanvasSide");
+			//移动效果是否为整体移动
+			var moveTogether = false;
+			//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+			var classList = offCanvasWrapper[0].classList;
+			//主界面‘显示侧滑菜单’按钮的点击事件
+			document.getElementById('offCanvasShow').addEventListener('tap', function() {
+				offCanvasWrapper.offCanvas('show');
+			});
+			//菜单界面，‘关闭侧滑菜单’按钮的点击事件
+			document.getElementById('offCanvasHide').addEventListener('tap', function() {
+				offCanvasWrapper.offCanvas('close');
+			});
+			//主界面和侧滑菜单界面均支持区域滚动；
+			mui('#offCanvasSideScroll').scroll();
+			mui('#offCanvasContentScroll').scroll();
+			//实现ios平台原生侧滑关闭页面；
+			if (mui.os.plus && mui.os.ios) {
+				mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+					plus.webview.currentWebview().setStyle({
+						'popGesture': 'none'
+					});
+				});
+			}
+		}
+	</script>
+
+</html>
