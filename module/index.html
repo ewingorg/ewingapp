@@ -14,41 +14,15 @@
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
 		<style>
 			.title {
-				margin: 20px 15px 10px;
-				color: #6d6d72;
+				margin: 20px 15px 10px; 
 				font-size: 15px;
 			}
-			
-			.oa-contact-cell.mui-table .mui-table-cell {
-				padding: 11px 0;
-				vertical-align: middle;
+			#offCanvasSide{
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42;
 			}
-			
-			.oa-contact-cell {
-				position: relative;
-				margin: -11px 0;
-			}
-			
-			.oa-contact-avatar {
-				width: 75px;
-			}
-			
-			.oa-contact-avatar img {
-				border-radius: 50%;
-			}
-			
-			.oa-contact-content {
-				width: 100%;
-			}
-			
-			.oa-contact-name {
-				margin-right: 20px;
-			}
-			
-			.oa-contact-name,
-			oa-contact-position {
-				float: left;
-			}
+			 
 		</style>
 	</head>
 
@@ -56,7 +30,7 @@
 
 		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
 			<!-- 菜单容器 -->
-			<aside id="offCanvasSide" class="mui-off-canvas-left" style="background-color:#DDDDDD;filter:alpha(opacity=90); -moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; ">
+			<aside id="offCanvasSide" class="mui-off-canvas-left" style="background-color:#FFFFFF;filter:alpha(opacity=90); -moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; ">
 				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<div class="content">
@@ -66,34 +40,27 @@
 
 						</div>
 						<div class="title">产品分类：</div>
-
-						<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted" style="background-color:#DDDDDD;color: #666666;">
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									鱼类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									虾类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									蟹类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									贝类
-								</a>
-							</li>
+						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								<a class="mui-navigate-right">
 									刺身类
 								</a>
 							</li>
-
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									虾类类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									背壳类
+								</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a class="mui-navigate-right">
+									鱼类
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -110,9 +77,7 @@
 
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
-						<div class="mui-input-row mui-search">
-							<input type="search" class="mui-input-clear" placeholder="">
-						</div>
+						 
 						<img width="100%" src="../images/haixiantitle.jpg">
 						<ul class="mui-table-view mui-grid-view" id="produectList">
 						</ul>
@@ -133,6 +98,9 @@
 						<span class="mui-tab-label">会员中心</span>
 					</a>
 				</nav>
+
+				<!-- 弹出分类菜单时候，主菜单配合变黑 -->
+				<div class="mui-off-canvas-backdrop"></div>
 			</div>
 		</div>
 	</body>

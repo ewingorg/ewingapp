@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>产品详情</title>
+		<title>海鲜街</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -35,24 +35,22 @@
 			.mui-popover {
 				height: 300px;
 			}
-			
-			 
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<div>
+			<div >
 				<span style="margin-left: 10;line-height: 2.5;color:#555555;font-size: 16px;">主页</span>
 
 				<span style="float:right;margin-right: 10px;line-height: 2.5;color:#555555;font-size: 16px;" id="ordercenter">| 订单中心</span>
 
-				<span style="float:right;margin-right: 5px;color:#555555;" class="mui-icon iconfont icon-gouwuche" id="prodcutCart"><span class="mui-badge" id="productCartNum"></span></span>
+				<span style="float:right;margin-right: 5px;color:#555555;width: 10;height: 10px;" class="mui-icon iconfont icon-gouwuche" id="prodcutCart"><span class="mui-badge" id="productCartNum"></span></span>
 			</div>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active" href="#tabbar">
+			<a class="mui-tab-item mui-active" href="#tabbar" id="navhome">
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
@@ -60,55 +58,54 @@
 				<span class="mui-icon mui-icon-star-filled"></span>
 				<span class="mui-tab-label">收藏</span>
 			</a>
-			<a class="mui-tab-item" href="#confirmPrice">
+			<a class="mui-tab-item" href="#specDiv" id="addCart">
 				<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined">
 					加入购物车
 				</button>
 			</a>
-			<a class="mui-tab-item" href="#tabbar-with-map">
+			<a class="mui-tab-item" href="#specDiv" id="addShopping">
 				<button type="button" class="mui-btn mui-btn-danger">立即购买</button>
 			</a>
 		</nav>
-		<div class="mui-content">
-			<div id="productDetail" class="mui-content mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<img width="100%" src="../images/haixian1.jpg">
-							<span class="detailfront">幸福就是可以一起睡觉</span>
-							<br>
-							<span class="pricefront">￥130</span>
 
-						</li>
-						<li class="mui-table-view-cell">
-							<div class="goods-detail js-goods-detail">
-								<h4 class="title">商品详情</h4>
-								<div class="rich-text">
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FvG1TEpsHofNJ21yE8tJW9JarAs-.jpg!730x0.jpg"> &nbsp;&nbsp;</p>
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/01/FjyEeFT6yNC3Esqo1IKEm_b05Abj.jpg!730x0.jpg"></p>
-									<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼生活在冰冷纯净的挪威海域，其养殖环境与野生环境类似。挪威三文鱼：世界上最健康的鱼类之一。</p>
-									<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含<span style="font-family: Helvetica, sans-serif;">DHA</span>和<span style="font-family: Helvetica, sans-serif;">EPA</span>这两种<span style="font-family: Helvetica, sans-serif;">omega-3</span>脂肪酸，同时有助于改善大脑的中枢神经系统健康、眼健康、心理健 康、调节情绪、和改善精神状态。</p>
-									<p style="margin-bottom: 16px; white-space: normal;"><span style="font-family: Helvetica, sans-serif;">omega-3</span>同样有益于心脏和循环系统健康。挪威鲑鱼富含蛋白质，每<span style="font-family: Helvetica, sans-serif;">100</span>克中约含有<span style="font-family: Helvetica, sans-serif;">22.1</span>克。</p>
-									<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含维生素<span style="font-family: Helvetica, sans-serif;">A</span>、<span style="font-family: Helvetica, sans-serif;">B1</span>、<span style="font-family: Helvetica, sans-serif;">B2</span>、<span style="font-family: Helvetica, sans-serif;">B3</span>、
-										<span style="font-family: Helvetica, sans-serif;">B12</span>、维生素<span style="font-family: Helvetica, sans-serif;">D</span>和维生素<span style="font-family: Helvetica, sans-serif;">E</span>，也是钙、铁、锌、镁、磷的优质来源。</p>
-									<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含多种对皮肤健康有益的营养元素，多次食用都会显著改善皮肤状况。</p>
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FubuMokhtYXg2OUMxcOqZUaVU59x.jpg!730x0.jpg"></p>
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/02/Fo2wSFquaFQFoFDgGrE7LAJxrjZy.jpg!730x0.jpg"></p>
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FkfssanSm7CchJP2mldHwE2XicLy.jpg!730x0.jpg"><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FgIoNOeY1c6Kcv4DhYI-yrgbjey8.jpg!730x0.jpg"></p>
-									<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/03/FsDeNxzwvrW91HN6wdfrQlaFzdeJ.jpg!730x0.jpg"></p>
-								</div>
+		<div id="productDetail" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<img width="100%" src="../images/haixian1.jpg">
+						<span class="detailfront">幸福就是可以一起睡觉</span>
+						<br>
+						<span class="pricefront">￥130</span>
 
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="goods-detail js-goods-detail">
+							<h4 class="title">商品详情</h4>
+							<div class="rich-text">
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FvG1TEpsHofNJ21yE8tJW9JarAs-.jpg!730x0.jpg"> &nbsp;&nbsp;</p>
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/01/FjyEeFT6yNC3Esqo1IKEm_b05Abj.jpg!730x0.jpg"></p>
+								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼生活在冰冷纯净的挪威海域，其养殖环境与野生环境类似。挪威三文鱼：世界上最健康的鱼类之一。</p>
+								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含<span style="font-family: Helvetica, sans-serif;">DHA</span>和<span style="font-family: Helvetica, sans-serif;">EPA</span>这两种<span style="font-family: Helvetica, sans-serif;">omega-3</span>脂肪酸，同时有助于改善大脑的中枢神经系统健康、眼健康、心理健 康、调节情绪、和改善精神状态。</p>
+								<p style="margin-bottom: 16px; white-space: normal;"><span style="font-family: Helvetica, sans-serif;">omega-3</span>同样有益于心脏和循环系统健康。挪威鲑鱼富含蛋白质，每<span style="font-family: Helvetica, sans-serif;">100</span>克中约含有<span style="font-family: Helvetica, sans-serif;">22.1</span>克。</p>
+								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含维生素<span style="font-family: Helvetica, sans-serif;">A</span>、<span style="font-family: Helvetica, sans-serif;">B1</span>、<span style="font-family: Helvetica, sans-serif;">B2</span>、<span style="font-family: Helvetica, sans-serif;">B3</span>、
+									<span style="font-family: Helvetica, sans-serif;">B12</span>、维生素<span style="font-family: Helvetica, sans-serif;">D</span>和维生素<span style="font-family: Helvetica, sans-serif;">E</span>，也是钙、铁、锌、镁、磷的优质来源。</p>
+								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含多种对皮肤健康有益的营养元素，多次食用都会显著改善皮肤状况。</p>
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FubuMokhtYXg2OUMxcOqZUaVU59x.jpg!730x0.jpg"></p>
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/02/Fo2wSFquaFQFoFDgGrE7LAJxrjZy.jpg!730x0.jpg"></p>
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FkfssanSm7CchJP2mldHwE2XicLy.jpg!730x0.jpg"><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FgIoNOeY1c6Kcv4DhYI-yrgbjey8.jpg!730x0.jpg"></p>
+								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/03/FsDeNxzwvrW91HN6wdfrQlaFzdeJ.jpg!730x0.jpg"></p>
 							</div>
-						</li>
 
-					</ul>
+						</div>
+					</li>
 
-				</div>
+				</ul>
+
 			</div>
 		</div>
 
 		<!--右下角弹出菜单-->
-		<div id="confirmPrice" class="mui-popover mui-popover-bottom" style="width: 100%;">
+		<div id="specDiv" class="mui-popover mui-popover-bottom" style="width: 100%;">
 			<div class="mui-popover-arrow"></div>
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
@@ -121,14 +118,14 @@
 						</li>
 						<li class="mui-table-view-cell mui-media">
 							<p class="detailfront">规格</p>
-							<div class="mui-content-padded" >
-								<button type="button" class="mui-btn specBtn"  >
+							<div class="mui-content-padded">
+								<button type="button" class="mui-btn specBtn">
 									无包装
 								</button>
-								<button type="button" class="mui-btn specBtn"  >
+								<button type="button" class="mui-btn specBtn">
 									普通包装
 								</button>
-								<button type="button" class="mui-btn specBtn" >
+								<button type="button" class="mui-btn specBtn">
 									带冰包装
 								</button>
 							</div>
@@ -141,7 +138,7 @@
 								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 							</div>
 							<div style="float: right;">
-								<button type="button" id="addProductCart" class="mui-btn mui-btn-danger">
+								<button type="button" id="confirmSpec" class="mui-btn mui-btn-danger">
 									确定
 								</button>
 							</div>
@@ -161,42 +158,56 @@
 		initTapEvent();
 		//设置所有点击事件
 		function initTapEvent() {
+			
+			document.getElementById("navhome").addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'index',
+					url: 'index.html'
+				});
+			});
 			document.getElementById("prodcutCart").addEventListener('tap', function() {
 				mui.openWindow({
 					id: 'producatCart',
 					url: 'procart.html'
 				});
 			});
-			
 			document.getElementById("ordercenter").addEventListener('tap', function() {
 				mui.openWindow({
 					id: 'ordercenter',
 					url: 'ordercenter.html'
 				});
 			});
-			
-			document.getElementById("addProductCart").addEventListener('tap', function() {
-				mui.toast('成功加入购物车!');
-				document.getElementById("confirmPrice").style.display = 'none';
-				var curCartNum = document.getElementById("productCartNum").innerHTML;
-				if(!curCartNum )
-				    curCartNum=0;
-				document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
+			document.getElementById("confirmSpec").addEventListener('tap', function() {
+				var action = document.getElementById("confirmSpec").getAttribute("action");
+				if (action == 'addCart') {
+					mui.toast('成功加入购物车!');
+					var curCartNum = document.getElementById("productCartNum").innerHTML;
+					if (!curCartNum)
+						curCartNum = 0;
+					document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
+				} else if (action == 'addShoppping') {
+				}
+				document.getElementById("specDiv").style.display = 'none';
 			});
-			
-			var specBtns = document.querySelectorAll(".specBtn"); 
-					for (var i = 0; i < specBtns.length; i++) { 
-						specBtns[i].addEventListener('tap', function() {
-						 
-							this.className="mui-btn specBtn mui-btn-warning mui-btn-outlined";
-							var specBtns = document.querySelectorAll(".specBtn");
-								for (var j = 0; j < specBtns.length; j++) { 
-									if(specBtns[j] != this){
-										specBtns[j].className="mui-btn";
-									} 
-								}
-						});
+			//点击购物和购买的时候变换动作类型，方便选择产品规格后跳转
+			document.getElementById("addCart").addEventListener('tap', function() {
+				document.getElementById("confirmSpec").setAttribute("action", "addCart");
+			});
+			document.getElementById("addShopping").addEventListener('tap', function() {
+				document.getElementById("confirmSpec").setAttribute("action", "addShoppping");
+			});
+			var specBtns = document.querySelectorAll(".specBtn");
+			for (var i = 0; i < specBtns.length; i++) {
+				specBtns[i].addEventListener('tap', function() {
+					this.className = "mui-btn specBtn mui-btn-warning mui-btn-outlined";
+					var specBtns = document.querySelectorAll(".specBtn");
+					for (var j = 0; j < specBtns.length; j++) {
+						if (specBtns[j] != this) {
+							specBtns[j].className = "mui-btn";
+						}
 					}
+				});
+			}
 		}
 	</script>
 
