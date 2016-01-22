@@ -44,12 +44,12 @@
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell"  id="orderlist">
 							<a href="#" class="mui-navigate-right"><span style="padding-right: 10px;" class="mui-icon iconfont icon-dingdan"></span>我的订单</a>
+						</li> 
+						<li class="mui-table-view-cell"  id="addresslist">
+							<a href="#general" class="mui-navigate-right"><span style="padding-right: 10px;" class="mui-icon iconfont icon-dizhi" ></span>收货地址</a>
 						</li>
 						<li class="mui-table-view-cell"  id="collectlist">
 							<a href="#privacy" class="mui-navigate-right"><span style="padding-right: 10px;" class="mui-icon iconfont icon-shoucang"></span>我的收藏</a>
-						</li>
-						<li class="mui-table-view-cell"  id="adressList">
-							<a href="#general" class="mui-navigate-right"><span style="padding-right: 10px;" class="mui-icon iconfont icon-dizhi" ></span>收货地址</a>
 						</li>
 						<li class="mui-table-view-cell"  id="commision">
 							<a href="#general" class="mui-navigate-right"><span style="padding-right: 10px;" class="mui-icon iconfont icon-wodeyongjin"></span>我的佣金</a>
@@ -85,6 +85,13 @@
 				mui.openWindow({
 					id: 'orderlist',
 					url: 'orderlist.html'
+				});
+			});
+			
+			document.getElementById("addresslist").addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'addresslist',
+					url: 'addresslist.html'
 				});
 			});
 		}
