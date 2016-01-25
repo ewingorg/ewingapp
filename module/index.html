@@ -14,15 +14,15 @@
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
 		<style>
 			.title {
-				margin: 20px 15px 10px; 
+				margin: 20px 15px 10px;
 				font-size: 15px;
 			}
-			#offCanvasSide{
+			
+			#offCanvasSide {
 				font-size: 14px;
 				font-weight: 400;
 				line-height: 1.42;
 			}
-			 
 		</style>
 	</head>
 
@@ -77,7 +77,7 @@
 
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
-						 
+
 						<img width="100%" src="../images/haixiantitle.jpg">
 						<ul class="mui-table-view mui-grid-view" id="produectList">
 						</ul>
@@ -115,6 +115,44 @@
 		initPullEvent();
 		initCategorySelect();
 		initTapEvent();
+		/*queryIndexProduct();
+
+		function queryIndexProduct() {
+			var requestJson = ' { ' +
+				' "sign": "5134933f298d72528f7851cc2c4c65f8", ' +
+				' "id": "14071402800120", ' +
+				' "client": {' +
+				'   "caller": "ewingapp.com"' +
+				'}, ' +
+				'"encrypt": "MD5", ' +
+				'"data": {  ' +
+				'    ' +
+				'}' +
+				'}"';
+			$.ajax({
+				data: {
+					sign: "5134933f298d72528f7851cc2c4c65f8",
+					id: "14071402800120",
+					client: {
+						caller: "ewingapp.com"
+					},
+					encrypt: "MD5",
+					data: {}
+				},
+				type: "POST",
+				async: false,
+				url: "http://100.84.89.236:9999/product/indexList",
+				dataType: "jsonp",
+				jsonp: "callbackparam", //传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+				jsonpCallback: "success_jsonpCallback", //自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+				success: function(json) {
+					alert(json[0].name); 
+				},
+				error: function() {
+					alert('fail');
+				}
+			});
+		}*/
 		//设置所有事件
 		function initTapEvent() {
 			document.getElementById("prodcutCart").addEventListener('tap', function() {
