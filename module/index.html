@@ -105,17 +105,16 @@
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
-	<script src="../js/jquery-1.10.1.min.js"></script> 
-	<script src="../js/mui.lazyload.img.js"></script>
+	<script src="../js/jquery-1.10.1.min.js"></script>
 	<script src="../js/jquery.loadTemplate-1.4.4.min.js"></script>
 	<script src="../busi/js/ajax.js"></script>
-
-	<div id="productInfoTmp" style="display: none;"></div>
-	<script type="text/html" id="lightProductTmp">
+	<script src="../js/jquery.url.js"></script>
+	<div id="productInfoHtmlTmp" style="display: none;"></div>
+	<script type="text/html" id="lightProductTemplate">
 		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
 			<div style="margin:5px 5px 5px -2px;">
 				<a href="#">
-					<img class="mui-media-object productimg" data-src="imageUrl" data-alt="author" data-link-wrap="imageUrl">
+					<img class="mui-media-object productimg"   data-src="imageUrl"  data-value="id">
 					<div class="mui-media-body" style="text-align:left;margin:10px 0px 5px 5px;float:left;font-size: 14px;font-weight: 400; "><span data-content="shortDesc"></span>
 					</div>
 				</a> <span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400;"> ￥  <span data-content="price"></span></span>
@@ -127,6 +126,8 @@
 	</script>
 
 	<script>
+	    //获取页面传来的参数
+		var userId = jQuery.url.param("userId");
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
@@ -173,41 +174,37 @@
 					mui('#offCanvasContentScroll').pullRefresh().endPullupToRefresh((pListIsEnd)); //参数为true代表没有更多数据了。
 					var table = document.body.querySelector('.pulltable');
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
-					var request = {
-						sign: "5134933f298d72528f7851cc2c4c65f8",
-						id: "14071402800120",
-						client: {
-							caller: "ewingapp.com"
-						},
-						encrypt: "MD5",
+					var requestJson = {
 						data: {
 							isHot: "0",
 							page: pListPage,
-							pageSize: pListPageSize
+							pageSize: pListPageSize,
+							userId: userId
 						}
 					};
-					ajax.jsonpSyncRequest("product/indexList", request, function(json) {
-						if (json.length > 0) {
-							pListPage++;
-							isEnd = true;
-						}
-						for (var i = 0; i < json.length; i++) {
-							$("#productInfoTmp").html('');
-							$("#productInfoTmp").loadTemplate($("#lightProductTmp"), json[i]);
-							$('#produectList').append($("#productInfoTmp").html());
+					ajax.jsonpSyncRequest("product/indexList", requestJson, function(json) { 
+						if (json.length == 0) {
+							pListIsEnd = true; 
+							return false;
+						} 
+						pListPage++;
+						$("#productInfoHtmlTmp").html('');
+						$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json);
+						$('#produectList').append($("#productInfoHtmlTmp").html()); 
+						var productimgs = document.querySelectorAll(".productimg");
+					 
+						for (var i = 0; i < productimgs.length; i++) { 
+							var pId = productimgs[i].getAttribute("value");
+							var jumpUrl = 'prodetail.html?pId=' + pId; 
+							 
+							productimgs[i].addEventListener('tap', function() {
+								mui.openWindow({
+									id: 'detail',
+									url: 'prodetail.html?pId=' + this.getAttribute("value") 
+								});
+							});
 						}
 					})
-					var productimgs = document.querySelectorAll(".productimg");
-					for (var i = 0; i < productimgs.length; i++) {
-						var data = productimgs[i].getAttribute("data");
-						var jumpUrl = 'prodetail.html?data=' + data;
-						productimgs[i].addEventListener('tap', function() {
-							mui.openWindow({
-								id: 'detail',
-								url: jumpUrl
-							});
-						});
-					}
 				}, 1000);
 			}
 			if (mui.os.plus) {

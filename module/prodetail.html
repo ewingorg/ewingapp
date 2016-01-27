@@ -33,7 +33,7 @@
 			}
 			
 			.mui-popover {
-				height: 300px;
+				min-height: 420px;
 			}
 		</style>
 	</head>
@@ -70,34 +70,9 @@
 
 		<div id="productDetail" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
-				<ul class="mui-table-view">
-					<li class="mui-table-view-cell">
-						<img width="100%" src="../images/haixian1.jpg">
-						<span class="detailfront">幸福就是可以一起睡觉</span>
-						<br>
-						<span class="pricefront">￥130</span>
+				<ul class="mui-table-view" id="productionDetailContainer">
 
-					</li>
-					<li class="mui-table-view-cell">
-						<div class="goods-detail js-goods-detail">
-							<h4 class="title">商品详情</h4>
-							<div class="rich-text">
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FvG1TEpsHofNJ21yE8tJW9JarAs-.jpg!730x0.jpg"> &nbsp;&nbsp;</p>
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/01/FjyEeFT6yNC3Esqo1IKEm_b05Abj.jpg!730x0.jpg"></p>
-								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼生活在冰冷纯净的挪威海域，其养殖环境与野生环境类似。挪威三文鱼：世界上最健康的鱼类之一。</p>
-								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含<span style="font-family: Helvetica, sans-serif;">DHA</span>和<span style="font-family: Helvetica, sans-serif;">EPA</span>这两种<span style="font-family: Helvetica, sans-serif;">omega-3</span>脂肪酸，同时有助于改善大脑的中枢神经系统健康、眼健康、心理健 康、调节情绪、和改善精神状态。</p>
-								<p style="margin-bottom: 16px; white-space: normal;"><span style="font-family: Helvetica, sans-serif;">omega-3</span>同样有益于心脏和循环系统健康。挪威鲑鱼富含蛋白质，每<span style="font-family: Helvetica, sans-serif;">100</span>克中约含有<span style="font-family: Helvetica, sans-serif;">22.1</span>克。</p>
-								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含维生素<span style="font-family: Helvetica, sans-serif;">A</span>、<span style="font-family: Helvetica, sans-serif;">B1</span>、<span style="font-family: Helvetica, sans-serif;">B2</span>、<span style="font-family: Helvetica, sans-serif;">B3</span>、
-									<span style="font-family: Helvetica, sans-serif;">B12</span>、维生素<span style="font-family: Helvetica, sans-serif;">D</span>和维生素<span style="font-family: Helvetica, sans-serif;">E</span>，也是钙、铁、锌、镁、磷的优质来源。</p>
-								<p style="margin-bottom: 16px; white-space: normal;">挪威鲑鱼富含多种对皮肤健康有益的营养元素，多次食用都会显著改善皮肤状况。</p>
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/23/FubuMokhtYXg2OUMxcOqZUaVU59x.jpg!730x0.jpg"></p>
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/02/Fo2wSFquaFQFoFDgGrE7LAJxrjZy.jpg!730x0.jpg"></p>
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FkfssanSm7CchJP2mldHwE2XicLy.jpg!730x0.jpg"><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/11/27/FgIoNOeY1c6Kcv4DhYI-yrgbjey8.jpg!730x0.jpg"></p>
-								<p><img width="100%" src="https://img.yzcdn.cn/upload_files/2015/12/03/FsDeNxzwvrW91HN6wdfrQlaFzdeJ.jpg!730x0.jpg"></p>
-							</div> 
-						</div>
-					</li> 
-				</ul> 
+				</ul>
 			</div>
 		</div>
 
@@ -107,32 +82,20 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<ul class="mui-table-view">
-						<li class="mui-table-view-cell mui-media">
-							<img class="mui-media-object mui-pull-left" src="../images/haixian1.jpg">
-							<span class="detailfront">澳洲生蚝</span>
-							<span class='pricefront' style="padding-top: 10px;">￥30.00</span>
+						<li class="mui-table-view-cell mui-media" id="productionPriceContainer">
 
 						</li>
-						<li class="mui-table-view-cell mui-media">
-							<p class="detailfront">规格</p>
-							<div class="mui-content-padded">
-								<button type="button" class="mui-btn specBtn">
-									无包装
-								</button>
-								<button type="button" class="mui-btn specBtn">
-									普通包装
-								</button>
-								<button type="button" class="mui-btn specBtn">
-									带冰包装
-								</button>
-							</div>
-						</li>
+
+						<div id="productSpecContrainer">
+
+						</div>
 						<li class="mui-table-view-cell mui-media">
 							<p class="detailfront">购买数量</p>
 							<div class="mui-numbox">
-								<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-								<input class="mui-input-numbox" type="number" value="1" />
-								<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+								<button class="mui-btn mui-btn-numbox-minus" type="button" id="minusProduct">-</button>
+								<input class="mui-input-numbox" type="number" value="1" id="productNum" readonly="true" />
+								<button class="mui-btn mui-btn-numbox-plus" type="button" id="plusProduct">+</button>
+
 							</div>
 							<div style="float: right;">
 								<button type="button" id="confirmSpec" class="mui-btn mui-btn-danger">
@@ -142,18 +105,86 @@
 						</li>
 					</ul>
 				</div>
-			</div> 
+			</div>
 		</div>
 	</body>
 	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-1.10.1.min.js"></script>
+	<script src="../js/jquery.loadTemplate-1.4.4.min.js"></script>
+	<script src="../busi/js/ajax.js"></script>
+	<script src="../js/jquery.url.js"></script>
+	<script type="text/html" id="productDetailTemplate">
+		<li class="mui-table-view-cell">
+			<img width="100%" data-src="productDetail.imageUrl">
+			<span class="detailfront" data-content="productDetail.shortDesc"></span>
+			<br>
+			<span class="pricefront">￥<span data-content="productDetail.price" ></span></span>
+
+		</li>
+		<li class="mui-table-view-cell">
+			<div class="goods-detail js-goods-detail">
+				<h4 class="title">商品详情</h4>
+				<div class="rich-text" data-content="productDetail.longDesc">
+				</div>
+			</div>
+		</li>
+	</script>
+	<script type="text/html" id="productPriceTemplate">
+		<img class="mui-media-object mui-pull-left" data-src="productDetail.imageUrl">
+		<span class="detailfront" data-content="productDetail.shortDesc"></span>
+		<span class='pricefront' style="padding-top: 10px;" id="selectPrice">￥<span data-content="productDetail.price" id="selectPrice"></span></span>
+
+	</script>
+	<script type="text/html" id="productSpecTemplate">
+		<li class="mui-table-view-cell mui-media">
+			<p class="detailfront" data-content="rootSpec.spec"></p>
+			<div class="mui-content-padded" data-content="childSpec" data-format="nestedTemplateFormatter" data-format-options="#productSpecItemTemplate">
+			</div>
+		</li>
+	</script>
+	<script type="text/html" id="productSpecItemTemplate">
+		<button type="button" class="mui-btn specBtn" data-content="spec" style="margin-right: 5px;" data-attach="id" data-value="rootSpec">
+		</button>
+	</script>
 	<script>
+		//获取页面传来的参数
+		var pId = jQuery.url.param("pId");
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
 		mui('#productDetail').scroll();
-		initTapEvent();
+		renderProductDetail();
+		var productPriceList;
+		var productSpecList;
+
+		function renderProductDetail() {
+			var requestJson = {
+				data: {
+					pId: pId
+				}
+			};
+			ajax.jsonpSyncRequest("product/detail", requestJson, function(json) {
+				$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json);
+				$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json);
+				$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.specList);
+				productPriceList = json.priceList;
+				productSpecList = json.specList;
+				initTapEvent();
+			})
+		}
 		//设置所有点击事件
 		function initTapEvent() {
+			document.getElementById("minusProduct").addEventListener('tap', function() {
+				var productNum = document.getElementById("productNum").value;
+				if (productNum >= 1) {
+					changeNum(-1);
+				} else {
+					document.getElementById("productNum").value = 1;
+				}
+			});
+			document.getElementById("plusProduct").addEventListener('tap', function() {
+				changeNum(1);
+			});
 			document.getElementById("navhome").addEventListener('tap', function() {
 				mui.openWindow({
 					id: 'index',
@@ -203,12 +234,63 @@
 					this.className = "mui-btn specBtn mui-btn-warning mui-btn-outlined";
 					var specBtns = document.querySelectorAll(".specBtn");
 					for (var j = 0; j < specBtns.length; j++) {
-						if (specBtns[j] != this) {
+						if (specBtns[j] != this && specBtns[j].getAttribute("value") == this.getAttribute("value")) {
 							specBtns[j].className = "mui-btn";
 						}
 					}
+					getPriceWhileSelectSpec();
 				});
 			}
+		}
+
+		function changeNum(changeNum) {
+			var productNum = document.getElementById("productNum").value;
+			var fixPrice = getPriceWhileSelectSpec();
+			var totalPrice = productNum * parseFloat(fixPrice.price);;
+			document.getElementById("selectPrice").innerHTML = totalPrice.toFixed(2);
+		}
+		/**
+		 * 根据规格获取价格
+		 */
+		function getPriceWhileSelectSpec() {
+			if (!productSpecList && productSpecList.length == 0)
+				return;
+			var selectSpecArray = new Array();
+			//查找所有规格组已经选中项
+			for (var i = 0; i < productSpecList.length; i++) {
+				var rootSpec = productSpecList[i].rootSpec.spec;
+				var specBtns = document.querySelectorAll(".specBtn");
+				for (var j = 0; j < specBtns.length; j++) {
+					if (specBtns[j].getAttribute("value") == rootSpec && specBtns[j].className.indexOf("mui-btn-outlined") != -1) {
+						selectSpecArray.push(specBtns[j].getAttribute("attach"));
+					}
+				}
+			}
+			//匹配选中項和规格列表
+			var fixPrice;
+			for (var i = 0; i < productPriceList.length; i++) {
+				var specIds = productPriceList[i].specIds.split(",");
+				var exist;
+				for (var j = 0; j < specIds.length; j++) {
+					exist = false;
+					for (var z = 0; z < selectSpecArray.length; z++) {
+						if (specIds[j] == selectSpecArray[z]) {
+							exist = true;
+						}
+					}
+					if (!exist)
+						break;
+				}
+				if (exist) {
+					fixPrice = productPriceList[i];
+				}
+			}
+			if (!fixPrice)
+				return;
+			var selectPrice = parseFloat(fixPrice.price);
+			//设置价格
+			document.getElementById("selectPrice").innerHTML = selectPrice.toFixed(2);
+			return fixPrice;
 		}
 	</script>
 

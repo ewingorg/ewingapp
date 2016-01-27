@@ -142,12 +142,11 @@
 
 			function initTapEvent() {
 				document.getElementById("minusProduct").addEventListener('tap', function() {
-					var productNum = document.getElementById("productNum").value; 
-					if (productNum <= 1) {
-						//设置为2，因为btn-minus会默认减去1
-						document.getElementById("productNum").value = 2;
-					} else {
+					var productNum = document.getElementById("productNum").value;
+					if (productNum >= 1) {
 						changeNum(-1);
+					} else {
+						document.getElementById("productNum").value = 1;
 					}
 				});
 				document.getElementById("plusProduct").addEventListener('tap', function() {
