@@ -182,14 +182,14 @@
 							userId: userId
 						}
 					};
-					ajax.jsonpSyncRequest("product/indexList", requestJson, function(json) { 
+					ajax.jsonpSyncRequest("product/indexList.action", requestJson, function(json) { 
 						if (json.length == 0) {
 							pListIsEnd = true; 
 							return false;
 						} 
 						pListPage++;
 						$("#productInfoHtmlTmp").html('');
-						$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json);
+						$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
 						$('#produectList').append($("#productInfoHtmlTmp").html()); 
 						var productimgs = document.querySelectorAll(".productimg");
 					 

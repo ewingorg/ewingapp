@@ -163,12 +163,12 @@
 					pId: pId
 				}
 			};
-			ajax.jsonpSyncRequest("product/detail", requestJson, function(json) {
-				$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json);
-				$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json);
-				$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.specList);
-				productPriceList = json.priceList;
-				productSpecList = json.specList;
+			ajax.jsonpSyncRequest("product/detail.action", requestJson, function(json) {
+				$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json.result);
+				$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json.result);
+				$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.result.specList);
+				productPriceList = json.result.priceList;
+				productSpecList = json.result.specList;
 				initTapEvent();
 			})
 		}
