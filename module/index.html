@@ -183,7 +183,7 @@
 						}
 					};
 					ajax.jsonpSyncRequest("product/indexList.action", requestJson, function(json) { 
-						if (json.length == 0) {
+						if (json.result.length == 0) {
 							pListIsEnd = true; 
 							return false;
 						} 
