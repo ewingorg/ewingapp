@@ -40,27 +40,8 @@
 
 						</div>
 						<div class="title">产品分类：</div>
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									刺身类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									虾类类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									背壳类
-								</a>
-							</li>
-							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">
-									鱼类
-								</a>
-							</li>
+						<ul class="mui-table-view" id="categoryList">
+							 
 						</ul>
 					</div>
 				</div>
@@ -110,6 +91,7 @@
 	<script src="../busi/js/ajax.js"></script>
 	<script src="../js/jquery.url.js"></script>
 	<div id="productInfoHtmlTmp" style="display: none;"></div>
+	<div id="categoryHtmlTmp" style="display: none;"></div>
 	<script type="text/html" id="lightProductTemplate">
 		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
 			<div style="margin:5px 5px 5px -2px;">
@@ -124,6 +106,14 @@
 				订购 </button>  </span> </div>
 		</li>
 	</script>
+	
+	<script type="text/html" id="categoryTemplate">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" data-content="name"> 
+				</a>
+			</li>
+	</script>
+
 
 	<script>
 	    //获取页面传来的参数
@@ -186,7 +176,7 @@
 						if (json.result.length == 0) {
 							pListIsEnd = true; 
 							return false;
-						} 
+						}  
 						pListPage++;
 						$("#productInfoHtmlTmp").html('');
 						$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
@@ -221,6 +211,18 @@
 		}
 
 		function initCategorySelect() {
+			var requestJson = {
+						data: { 
+							userId: userId
+						}
+			};
+			
+			ajax.jsonpSyncRequest("product/category.action", requestJson, function(json) { 
+				$("#categoryHtmlTmp").html('');
+				$("#categoryHtmlTmp").loadTemplate($("#categoryTemplate"), json.result);
+				$('#categoryList').append($("#categoryHtmlTmp").html()); 
+						 
+			});
 			//主界面‘显示侧滑菜单’按钮的点击事件
 			//侧滑容器父节点
 			var offCanvasWrapper = mui('#offCanvasWrapper');
