@@ -36,6 +36,40 @@
 				min-height: 420px;
 			}
 		</style>
+		
+		<script type="text/html" id="productDetailTemplate">
+			<li class="mui-table-view-cell">
+				<img width="100%" data-src="productDetail.imageUrl">
+				<span class="detailfront" data-content="productDetail.shortDesc"></span>
+				<br>
+				<span class="pricefront">￥<span data-content="productDetail.priceRange" ></span></span>
+	
+			</li>
+			<li class="mui-table-view-cell">
+				<div class="goods-detail js-goods-detail">
+					<h4 class="title">商品详情</h4>
+					<div class="rich-text" data-content="productDetail.longDesc">
+					</div>
+				</div>
+			</li>
+		</script>
+		<script type="text/html" id="productPriceTemplate">
+			<img class="mui-media-object mui-pull-left" data-src="productDetail.imageUrl">
+			<span class="detailfront" data-content="productDetail.shortDesc"></span>
+			<span class='pricefront' style="padding-top: 10px;" id="selectPrice">￥<span data-content="productDetail.priceRange" id="selectPrice"></span></span>
+	
+		</script>
+		<script type="text/html" id="productSpecTemplate">
+			<li class="mui-table-view-cell mui-media specGroup">
+				<p class="detailfront" data-content="rootSpec.spec"></p>
+				<div class="mui-content-padded" data-content="childSpec" data-format="nestedTemplateFormatter" data-format-options="#productSpecItemTemplate">
+				</div>
+			</li>
+		</script>
+		<script type="text/html" id="productSpecItemTemplate">
+			<button type="button" class="mui-btn specBtn" data-content="spec" style="margin-right: 5px;" data-attach="id" data-value="rootSpec">
+			</button>
+		</script>
 	</head>
 
 	<body>
@@ -44,7 +78,7 @@
 			<div>
 				<span style="margin-left: 10;line-height: 2.5;color:#555555;font-size: 16px;">主页</span>
 
-				<span style="float:right;margin-right: 10px;line-height: 2.5;color:#555555;font-size: 16px;" id="ordercenter">| 订单中心</span>
+				<span style="float:right;margin-right: 10px;line-height: 2.5;color:#555555;font-size: 16px;" id="orderList">| 订单中心</span>
 
 				<span style="float:right;margin-right: 5px;color:#555555;width: 10;height: 10px;" class="mui-icon iconfont icon-gouwuche" id="prodcutCart"><span class="mui-badge" id="productCartNum"></span></span>
 			</div>
@@ -54,7 +88,7 @@
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="#tabbar-with-chat">
+			<a class="mui-tab-item" href="#tabbar-with-chat" id="collectA">
 				<span class="mui-icon mui-icon-star-filled"></span>
 				<span class="mui-tab-label">收藏</span>
 			</a>
@@ -113,185 +147,6 @@
 	<script src="../js/jquery.loadTemplate-1.4.4.min.js"></script>
 	<script src="../busi/js/ajax.js"></script>
 	<script src="../js/jquery.url.js"></script>
-	<script type="text/html" id="productDetailTemplate">
-		<li class="mui-table-view-cell">
-			<img width="100%" data-src="productDetail.imageUrl">
-			<span class="detailfront" data-content="productDetail.shortDesc"></span>
-			<br>
-			<span class="pricefront">￥<span data-content="productDetail.price" ></span></span>
-
-		</li>
-		<li class="mui-table-view-cell">
-			<div class="goods-detail js-goods-detail">
-				<h4 class="title">商品详情</h4>
-				<div class="rich-text" data-content="productDetail.longDesc">
-				</div>
-			</div>
-		</li>
-	</script>
-	<script type="text/html" id="productPriceTemplate">
-		<img class="mui-media-object mui-pull-left" data-src="productDetail.imageUrl">
-		<span class="detailfront" data-content="productDetail.shortDesc"></span>
-		<span class='pricefront' style="padding-top: 10px;" id="selectPrice">￥<span data-content="productDetail.price" id="selectPrice"></span></span>
-
-	</script>
-	<script type="text/html" id="productSpecTemplate">
-		<li class="mui-table-view-cell mui-media">
-			<p class="detailfront" data-content="rootSpec.spec"></p>
-			<div class="mui-content-padded" data-content="childSpec" data-format="nestedTemplateFormatter" data-format-options="#productSpecItemTemplate">
-			</div>
-		</li>
-	</script>
-	<script type="text/html" id="productSpecItemTemplate">
-		<button type="button" class="mui-btn specBtn" data-content="spec" style="margin-right: 5px;" data-attach="id" data-value="rootSpec">
-		</button>
-	</script>
-	<script>
-		//获取页面传来的参数
-		var pId = jQuery.url.param("pId");
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
-		mui('#productDetail').scroll();
-		renderProductDetail();
-		var productPriceList;
-		var productSpecList;
-
-		function renderProductDetail() {
-			var requestJson = {
-				data: {
-					pId: pId
-				}
-			};
-			ajax.jsonpSyncRequest("product/detail.action", requestJson, function(json) {
-				$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json.result);
-				$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json.result);
-				$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.result.specList);
-				productPriceList = json.result.priceList;
-				productSpecList = json.result.specList;
-				initTapEvent();
-			})
-		}
-		//设置所有点击事件
-		function initTapEvent() {
-			document.getElementById("minusProduct").addEventListener('tap', function() {
-				var productNum = document.getElementById("productNum").value;
-				if (productNum >= 1) {
-					changeNum(-1);
-				} else {
-					document.getElementById("productNum").value = 1;
-				}
-			});
-			document.getElementById("plusProduct").addEventListener('tap', function() {
-				changeNum(1);
-			});
-			document.getElementById("navhome").addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'index',
-					url: 'index.html'
-				});
-			});
-			document.getElementById("prodcutCart").addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'producatCart',
-					url: 'procart.html'
-				});
-			});
-			document.getElementById("ordercenter").addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'ordercenter',
-					url: 'ordercenter.html'
-				});
-			});
-			document.getElementById("confirmSpec").addEventListener('tap', function() {
-				var action = document.getElementById("confirmSpec").getAttribute("action");
-				if (action == 'addCart') {
-					mui.toast('成功加入购物车!');
-					var curCartNum = document.getElementById("productCartNum").innerHTML;
-					if (!curCartNum)
-						curCartNum = 0;
-					document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
-					document.getElementById("specDiv").style.display = 'none';
-				} else if (action == 'addShoppping') {
-					document.getElementById("specDiv").style.display = 'none';
-					mui.openWindow({
-						id: 'order',
-						url: 'order.html'
-					});
-				}
-				document.getElementById("specDiv").style.display = 'none';
-			});
-			//点击购物和购买的时候变换动作类型，方便选择产品规格后跳转
-			document.getElementById("addCart").addEventListener('tap', function() {
-				document.getElementById("confirmSpec").setAttribute("action", "addCart");
-			});
-			document.getElementById("addShopping").addEventListener('tap', function() {
-				document.getElementById("confirmSpec").setAttribute("action", "addShoppping");
-			});
-			var specBtns = document.querySelectorAll(".specBtn");
-			for (var i = 0; i < specBtns.length; i++) {
-				specBtns[i].addEventListener('tap', function() {
-					this.className = "mui-btn specBtn mui-btn-warning mui-btn-outlined";
-					var specBtns = document.querySelectorAll(".specBtn");
-					for (var j = 0; j < specBtns.length; j++) {
-						if (specBtns[j] != this && specBtns[j].getAttribute("value") == this.getAttribute("value")) {
-							specBtns[j].className = "mui-btn";
-						}
-					}
-					getPriceWhileSelectSpec();
-				});
-			}
-		}
-
-		function changeNum(changeNum) {
-			var productNum = document.getElementById("productNum").value;
-			var fixPrice = getPriceWhileSelectSpec();
-			var totalPrice = productNum * parseFloat(fixPrice.price);;
-			document.getElementById("selectPrice").innerHTML = totalPrice.toFixed(2);
-		}
-		/**
-		 * 根据规格获取价格
-		 */
-		function getPriceWhileSelectSpec() {
-			if (!productSpecList && productSpecList.length == 0)
-				return;
-			var selectSpecArray = new Array();
-			//查找所有规格组已经选中项
-			for (var i = 0; i < productSpecList.length; i++) {
-				var rootSpec = productSpecList[i].rootSpec.spec;
-				var specBtns = document.querySelectorAll(".specBtn");
-				for (var j = 0; j < specBtns.length; j++) {
-					if (specBtns[j].getAttribute("value") == rootSpec && specBtns[j].className.indexOf("mui-btn-outlined") != -1) {
-						selectSpecArray.push(specBtns[j].getAttribute("attach"));
-					}
-				}
-			}
-			//匹配选中項和规格列表
-			var fixPrice;
-			for (var i = 0; i < productPriceList.length; i++) {
-				var specIds = productPriceList[i].specIds.split(",");
-				var exist;
-				for (var j = 0; j < specIds.length; j++) {
-					exist = false;
-					for (var z = 0; z < selectSpecArray.length; z++) {
-						if (specIds[j] == selectSpecArray[z]) {
-							exist = true;
-						}
-					}
-					if (!exist)
-						break;
-				}
-				if (exist) {
-					fixPrice = productPriceList[i];
-				}
-			}
-			if (!fixPrice)
-				return;
-			var selectPrice = parseFloat(fixPrice.price);
-			//设置价格
-			document.getElementById("selectPrice").innerHTML = selectPrice.toFixed(2);
-			return fixPrice;
-		}
-	</script>
-
+	<script src="../busi/index/prodetail.js"></script>
+	
 </html>
