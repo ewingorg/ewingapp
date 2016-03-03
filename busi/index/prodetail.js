@@ -97,13 +97,12 @@ function initTapEvent() {
 					return;
 				}
 				document.getElementById("specDiv").style.display = 'none';
-					mui.openWindow({
-						id: 'order',
-						url: 'order/order.html?orderId=' + json.result.orderId
-					});
-				}
-			}
-			document.getElementById("specDiv").style.display = 'none';
+				mui.openWindow({
+					id: 'order',
+					url: 'order/order.html?orderId=' + json.result.orderId
+				});
+			});
+		}
 	});
 	//点击购物和购买的时候变换动作类型，方便选择产品规格后跳转
 	document.getElementById("addCart").addEventListener('tap', function() {
