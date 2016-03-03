@@ -1,5 +1,5 @@
 //获取页面传来的参数
-var userId = jQuery.url.param("userId");
+var shopId = jQuery.url.param("shopId");
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
@@ -61,7 +61,7 @@ function initPullEvent() {
 					isHot: "0",
 					page: pListPage,
 					pageSize: pListPageSize,
-					userId: userId
+					shopId: shopId
 				}
 			};
 			ajax.jsonpSyncRequest("product/indexList.action", requestJson, function(json) {
@@ -105,7 +105,7 @@ function initPullEvent() {
 function initCategorySelect() {
 	var requestJson = {
 		data: {
-			userId: userId
+			shopId: shopId
 		}
 	};
 	ajax.jsonpSyncRequest("product/category.action", requestJson, function(json) {
