@@ -41,7 +41,8 @@ function init() {
 		}
 
 		$("#addrUl").loadTemplate($("#addrLi"), json.result.defaultAddr);
-		$("#payWayUl").loadTemplate($("#payWayLi"), json.result.payWay);
+		$("#payWayUl").loadTemplate($("#payWayLi"), json.result.payWays);
+		console.log(json.result.payWays);
 		
 		for(var i=0; i<json.result.list.length; i++){
 			$("#tmp").html('');

@@ -66,7 +66,7 @@
 		
 		<script type="text/html" id="payWayLi">
 			<li class="mui-table-view-cell">
-				<a class="mui-navigate-right" data-content="msg">
+				<a class="mui-navigate-right" data-template-bind='[{"attribute": "payWayId", "value": "value"}]' data-content="msg">
 				</a>
 			</li>
 		</script>
@@ -127,7 +127,7 @@
 			<a class="mui-tab-item" href="#tabbar-with-map">
 				<div style="float: right;">
 					<span class="cartItemfront">总计:￥<span id="totalPrice"></span></span>
-					<button type="button" class="mui-btn mui-btn-danger" id="confirmBtn"> 确定</button>
+					<button type="button" class="mui-btn mui-btn-danger" id="confirmBtn"> 付款</button>
 				</div>
 			</a>
 		</nav>

@@ -40,6 +40,25 @@ function initTapEvent() {
 //	document.getElementById("plusProduct").addEventListener('tap', function() {
 //		changeNum(1);
 //	});
+
+	document.getElementById("collectA").addEventListener('tap', function() {
+		if(document.getElementById("collectA").className.indexOf("mui-active") != -1){
+			return;
+		}
+		var requestJson = {
+			data: {
+				resId: pId
+			}
+		};
+		ajax.jsonpSyncRequest("collect/addCollect.action", requestJson, function(json) {
+			if(json.result == 2000000){
+				$("#collectA").addClass('mui-active');
+			}
+		});
+			
+			
+	});
+	
 	document.getElementById("navhome").addEventListener('tap', function() {
 		mui.openWindow({
 			id: 'index',
