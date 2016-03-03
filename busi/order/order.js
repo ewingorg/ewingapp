@@ -49,6 +49,7 @@ function init() {
 			$("#tmp").loadTemplate($("#orderUl"), json.result.list[i]);
 			$("#order").append($("#tmp").html());
 		}
+		$("#tmp").html('');
 		
 		self.analyseTotal();
 
@@ -93,29 +94,36 @@ function init() {
 		}
 		
 		document.getElementById("confirmBtn").addEventListener('tap', function() {
-		var pros = document.querySelectorAll('.product');
-		var items = new Array();
-		for(var i=0; i<pros.length ; i++){
-			items.push({
-				detailId : pros[i].getAttribute('detailId'),
-				itemCount : pros[i].querySelector('.productNum').value
-			});
-		}
-		
-		var requestJson = {
-			data: {
-				list: items
+			var pros = document.querySelectorAll('.product');
+			var items = new Array();
+			for(var i=0; i<pros.length ; i++){
+				items.push({
+					detailId : pros[i].getAttribute('detailId'),
+					itemCount : pros[i].querySelector('.productNum').value
+				});
 			}
-		};
-		ajax.jsonpSyncRequest("order/confirm.action", requestJson, function(json) {
-			if (json.length == 0) {
-				return false;
-			}
-				
-				
-					
 			
-		});
+			var payWayLis = $("#payWayUl").find("li");
+			
+			
+			var requestJson = {
+				data: {
+//					addrId : ,
+//					payWayId : ,
+					list: items
+				}
+			};
+			
+			console.log(requestJson);
+			ajax.jsonpSyncRequest("order/confirm.action", requestJson, function(json) {
+				if (json.length == 0) {
+					return false;
+				}
+					
+					
+						
+				
+			});
 	});	
 	});
 
