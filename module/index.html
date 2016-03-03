@@ -22,14 +22,12 @@
 				font-weight: 400;
 				line-height: 1.42;
 			} 
+			.topLogo img{
+				width:100%;
+			}
 		</style>
 		
-		<script type="text/html" id="categoryLi">
-			<li class="mui-table-view-cell">
-				<a class="mui-navigate-right" data-content="name" data-template-bind='[{"attribute": "catId", "value": "id"}]'>
-				</a>
-			</li>
-		</script>
+	
 	</head>
 
 	<body>
@@ -62,8 +60,9 @@
 
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
-
-						<img width="100%" src="../images/haixiantitle.jpg">
+						<div name="KEY_TOP_LOGO" class="topLogo">
+							<!--<img width="100%" src="../images/haixiantitle.jpg">-->
+						</div>
 						<ul class="mui-table-view mui-grid-view" id="produectList">
 						</ul>
 					</div>
@@ -95,7 +94,7 @@
 	<script src="../busi/js/ajax.js"></script>
 	<script src="../js/jquery.url.js"></script>
 	<script src="../busi/index/index.js"></script>
-
+	<!-- 产品列表模板-->
 	<div id="productInfoHtmlTmp" style="display: none;"></div>
 	<script type="text/html" id="lightProductTemplate">
 		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
@@ -111,5 +110,17 @@
 			</div>
 		</li>
 	</script>
-
+	<!-- 分类模板-->
+	<script type="text/html" id="categoryLi">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" data-content="name" data-template-bind='[{"attribute": "catId", "value": "id"}]'>
+				</a>
+			</li>
+	</script>
+	
+	<script type="text/html" id="keyTemplate">
+			<a href="#">
+				 <img data-src="imageUrl"  data-template-bind='[{"attribute": "blockid", "value": "id"},{"attribute": "blockurl", "value": "linkUrl"}]'>
+			</a> 
+	</script>
 </html>

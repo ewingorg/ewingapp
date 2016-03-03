@@ -3,9 +3,54 @@ var shopId = jQuery.url.param("shopId");
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
-initPullEvent();
+
+initTemplateKey();
 initCategorySelect();
+initPullEvent();
 initTapEvent();
+
+function initTemplateKey() {
+	var requestJson = {
+		data: {
+			shopId: shopId,
+			templateName: 'index.html'
+		}
+	};
+	var templateKeyList;
+	ajax.jsonpSyncRequest("web/templateKey.action", requestJson, function(json) {
+		var g = json;
+		templateKeyList = json.result;
+		if (!templateKeyList)
+			return;
+
+		$("div[name^='KEY_']").each(function(e) {
+			var keyContainer = $(this);
+			var expectKey = $(this).attr('name').replace('KEY_', '');
+
+			for (var i = 0; i < templateKeyList.length; i++) {
+				var group = templateKeyList[i];
+				var groupKey = group.groupKey;
+				if (expectKey == groupKey) {
+					keyContainer.loadTemplate($("#keyTemplate"), group.blockList);
+					break;
+				}
+			}
+		}); 
+		
+ 		var blockElementList = document.querySelectorAll("[blockid]");
+		for (var i = 0; i < blockElementList.length; i++) {
+			var url = blockElementList[i].getAttribute("blockurl");
+			console.log(url);
+			blockElementList[i].addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'jumpPage',
+					url: this.getAttribute("blockurl")
+				});
+			});
+		}
+	});
+
+}
 //设置所有事件
 function initTapEvent() {
 
@@ -75,10 +120,7 @@ function initPullEvent() {
 				$('#produectList').append($("#productInfoHtmlTmp").html());
 
 				var productimgs = document.querySelectorAll(".productimg");
-				for (var i = 0; i < productimgs.length; i++) {
-					var pId = productimgs[i].getAttribute("value");
-					var jumpUrl = 'prodetail.html?pId=' + pId;
-
+				for (var i = 0; i < productimgs.length; i++) { 
 					productimgs[i].addEventListener('tap', function() {
 						mui.openWindow({
 							id: 'prodetail',
@@ -93,7 +135,7 @@ function initPullEvent() {
 		mui.plusReady(function() {
 			setTimeout(function() {
 				mui('#offCanvasContentScroll').pullRefresh().pullupLoading();
-			}, 1000);
+			}, 500);
 		});
 	} else {
 		mui.ready(function() {
@@ -109,36 +151,37 @@ function initCategorySelect() {
 		}
 	};
 	ajax.jsonpSyncRequest("product/category.action", requestJson, function(json) {
-			$("#categoryUl").html('');
-			$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
+		$("#categoryUl").html('');
+		$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
 	});
-		//主界面‘显示侧滑菜单’按钮的点击事件
-		//侧滑容器父节点
-		var offCanvasWrapper = mui('#offCanvasWrapper');
-		//主界面容器
-		var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
-		//菜单容器
-		var offCanvasSide = document.getElementById("offCanvasSide");
-		//移动效果是否为整体移动
-		var moveTogether = false;
-		//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
-		var classList = offCanvasWrapper[0].classList;
-		//主界面‘显示侧滑菜单’按钮的点击事件
-		document.getElementById('offCanvasShow').addEventListener('tap', function() {
-			offCanvasWrapper.offCanvas('show');
-		});
-		//菜单界面，‘关闭侧滑菜单’按钮的点击事件
-		document.getElementById('offCanvasHide').addEventListener('tap', function() {
-			offCanvasWrapper.offCanvas('close');
-		});
-		//主界面和侧滑菜单界面均支持区域滚动；
-		mui('#offCanvasSideScroll').scroll(); mui('#offCanvasContentScroll').scroll();
-		//实现ios平台原生侧滑关闭页面；
-		if (mui.os.plus && mui.os.ios) {
-			mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
-				plus.webview.currentWebview().setStyle({
-					'popGesture': 'none'
-				});
+	//主界面‘显示侧滑菜单’按钮的点击事件
+	//侧滑容器父节点
+	var offCanvasWrapper = mui('#offCanvasWrapper');
+	//主界面容器
+	var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+	//菜单容器
+	var offCanvasSide = document.getElementById("offCanvasSide");
+	//移动效果是否为整体移动
+	var moveTogether = false;
+	//侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+	var classList = offCanvasWrapper[0].classList;
+	//主界面‘显示侧滑菜单’按钮的点击事件
+	document.getElementById('offCanvasShow').addEventListener('tap', function() {
+		offCanvasWrapper.offCanvas('show');
+	});
+	//菜单界面，‘关闭侧滑菜单’按钮的点击事件
+	document.getElementById('offCanvasHide').addEventListener('tap', function() {
+		offCanvasWrapper.offCanvas('close');
+	});
+	//主界面和侧滑菜单界面均支持区域滚动；
+	mui('#offCanvasSideScroll').scroll();
+	mui('#offCanvasContentScroll').scroll();
+	//实现ios平台原生侧滑关闭页面；
+	if (mui.os.plus && mui.os.ios) {
+		mui.plusReady(function() { //5+ iOS暂时无法屏蔽popGesture时传递touch事件，故该demo直接屏蔽popGesture功能
+			plus.webview.currentWebview().setStyle({
+				'popGesture': 'none'
 			});
-		}
+		});
 	}
+}
