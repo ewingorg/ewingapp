@@ -35,6 +35,41 @@ function initTapEvent() {
 	});
 }
 
+function fillCategory(json){
+	 
+		$("#categoryUl").html('');
+		$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
+}
+
+//是否没有数据
+	var pListIsEnd = false;
+	//产品页码
+	var pListPage = 1;
+	//产品页大小
+	var pListPageSize = 2;
+
+
+ 	function fillProductList(json){
+	 if (json.result.length == 0) {
+					pListIsEnd = true;
+					return false;
+		}
+		pListPage++;
+		$("#productInfoHtmlTmp").html('');
+		$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
+		$('#produectList').append($("#productInfoHtmlTmp").html()); 
+	  
+		var productimgs = document.querySelectorAll(".productimg");
+		for (var i = 0; i < productimgs.length; i++) { 
+			productimgs[i].addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'prodetail',
+					url: 'prodetail.html?pId=' + this.getAttribute("value")
+				});
+			});
+		}
+}
+	 
 function initPullEvent() {
 	mui.init({
 		pullRefresh: {
@@ -45,14 +80,8 @@ function initPullEvent() {
 			}
 		}
 	});
-	//是否没有数据
-	var pListIsEnd = false;
-	//产品页码
-	var pListPage = 1;
-	//产品页大小
-	var pListPageSize = 2;
-
-
+	
+	
 	/**
 	 * 上拉加载具体业务实现
 	 */
@@ -69,26 +98,7 @@ function initPullEvent() {
 					shopId: shopId
 				}
 			};
-			ajax.jsonpSyncRequest("product/indexList.action", requestJson, function(json) {
-				if (json.result.length == 0) {
-					pListIsEnd = true;
-					return false;
-				}
-				pListPage++;
-				$("#productInfoHtmlTmp").html('');
-				$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
-				$('#produectList').append($("#productInfoHtmlTmp").html());
-
-				var productimgs = document.querySelectorAll(".productimg");
-				for (var i = 0; i < productimgs.length; i++) { 
-					productimgs[i].addEventListener('tap', function() {
-						mui.openWindow({
-							id: 'prodetail',
-							url: 'prodetail.html?pId=' + this.getAttribute("value")
-						});
-					});
-				}
-			})
+			ajax.jsonpSyncFetch ("product/indexList.action", requestJson,"fillProductList")
 		}, 1000);
 	}
 	if (mui.os.plus) {
@@ -110,10 +120,7 @@ function initCategorySelect() {
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncRequest("product/category.action", requestJson, function(json) {
-		$("#categoryUl").html('');
-		$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
-	});
+	ajax.jsonpSyncFetch ("product/category.action", requestJson, "fillCategory");
 	//主界面‘显示侧滑菜单’按钮的点击事件
 	//侧滑容器父节点
 	var offCanvasWrapper = mui('#offCanvasWrapper');

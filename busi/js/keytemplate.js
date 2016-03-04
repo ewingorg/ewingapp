@@ -2,17 +2,8 @@ if (!this.keytemplate) {
 	var keytemplate = {};
 } 
 
-keytemplate.initTemplateKey = function(shopId,templateName) {
-
-	var requestJson = {
-		data: {
-			shopId: shopId,
-			templateName: templateName
-		}
-	};
-	var templateKeyList;
-	ajax.jsonpSyncRequest("web/templateKey.action", requestJson, function(json) { 
-		templateKeyList = json.result;
+keytemplate.callback=function(json){ 
+	var templateKeyList = json.result;
 		if (!templateKeyList)
 			return;
 
@@ -40,5 +31,16 @@ keytemplate.initTemplateKey = function(shopId,templateName) {
 				});
 			});
 		}
-	});
+}
+
+keytemplate.initTemplateKey = function(shopId,templateName) {
+
+	var requestJson = {
+		data: {
+			shopId: shopId,
+			templateName: templateName
+		}
+	};
+	
+	ajax.jsonpSyncRequest2("web/templateKey.action", requestJson, "keytemplate.callback");
 }
