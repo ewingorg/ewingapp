@@ -8,17 +8,16 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<!--标准mui.css-->
-		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../fonts/css/mui.css">
 		<!--App自定义的css-->
-		<link rel="stylesheet" type="text/css" href="../../css/app.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../fonts/css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../../fonts/css/iconfont.css" />
 		
-		<link rel="stylesheet" type="text/css" href="../../css/app.css" />
-		<link href="../../css/mui.picker.css" rel="stylesheet" />
-		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../fonts/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../fonts/css/mui.poppicker.css" rel="stylesheet" />
 		
 		<script type="text/html" id="addrLi">
-			<li class="mui-table-view-cell mui-media addrLi" >
+			<li class="mui-table-view-cell mui-media addrLi" data-template-bind='[{"attribute": "addrId", "value": "id"}]'>
 				<a class="mui-navigate-right">
 					<p> <span data-content="receiver"></span>  <span style="padding-left: 10px;" data-content="phone"></span></p>
 					<p> <span data-content="province"></span>  <span data-content="city"></span>  <span data-content="region"></span>  <span data-content="address"></span></p>
@@ -31,7 +30,7 @@
 					<li class="mui-table-view-cell mui-media">
 						<span class="mui-icon iconfont icon-dianpu" style="margin-right: 10px;"></span><span data-content="shopName"></span> <span style="margin-left: 10px;">&#62;</span>
 					</li>
-					<div id="orderDiv" class="product" data-template-bind='[{"attribute": "detailId", "value": "id"}]'>
+					<div class="product orderDiv" data-template-bind='[{"attribute": "detailId", "value": "id"}]'>
 						<li class="mui-table-view-cell mui-media">
 							<div class="mui-left">
 								<img class="mui-pull-left resIcon" style="height: 80px;width: 80px;padding-right: 10px;" data-src="icon" data-template-bind='[{"attribute": "resId", "value": "resourceId"}]'>
@@ -65,7 +64,7 @@
 		</script>
 		
 		<script type="text/html" id="payWayLi">
-			<li class="mui-table-view-cell">
+			<li class="mui-table-view-cell payWay">
 				<a class="mui-navigate-right" data-template-bind='[{"attribute": "payWayId", "value": "value"}]' data-content="msg">
 				</a>
 			</li>
@@ -149,6 +148,7 @@
 		</div>
 		
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../busi/core/ewingdialog.js"></script>
 		<script src="../../js/jquery-1.10.1.min.js"></script>
 		<script src="../../js/jquery.loadTemplate-1.4.4.min.js"></script>
 		<script src="../../busi/js/ajax.js"></script>

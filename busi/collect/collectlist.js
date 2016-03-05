@@ -32,7 +32,10 @@ function load(status) {
 			pageSize: pageSize
 		}
 	};
-	ajax.jsonpSyncRequest("collect/queryCollectIndex.action", requestJson, function(json) {
+	ajax.jsonpSyncFetch("collect/queryCollectIndex.action", requestJson, 'rederCollectList');
+}
+
+function rederCollectList(json) {
 		if (json.length == 0) {
 			return false;
 		}
@@ -49,5 +52,4 @@ function load(status) {
 				});
 			});
 		}
-	});
-}
+	}

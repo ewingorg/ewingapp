@@ -42,5 +42,5 @@ keytemplate.initTemplateKey = function(shopId,templateName) {
 		}
 	};
 	
-	ajax.jsonpSyncRequest2("web/templateKey.action", requestJson, "keytemplate.callback");
+	ajax.jsonpSyncFetch("web/templateKey.action", requestJson, "keytemplate.callback");
 }

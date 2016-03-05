@@ -4,13 +4,13 @@ mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
 
-keytemplate.initTemplateKey(shopId,'index.html');
+keytemplate.initTemplateKey(shopId, 'index.html');
 initCategorySelect();
 initPullEvent();
 initTapEvent();
 
 
-	 
+
 //设置所有事件
 function initTapEvent() {
 
@@ -27,6 +27,7 @@ function initTapEvent() {
 			url: 'order/procart.html'
 		});
 	});
+
 	document.getElementById("accountCenter").addEventListener('tap', function() {
 		mui.openWindow({
 			id: 'ordercenter',
@@ -35,41 +36,41 @@ function initTapEvent() {
 	});
 }
 
-function fillCategory(json){
-	 
-		$("#categoryUl").html('');
-		$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
+function fillCategory(json) {
+
+	$("#categoryUl").html('');
+	$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
 }
 
 //是否没有数据
-	var pListIsEnd = false;
-	//产品页码
-	var pListPage = 1;
-	//产品页大小
-	var pListPageSize = 2;
+var pListIsEnd = false;
+//产品页码
+var pListPage = 1;
+//产品页大小
+var pListPageSize = 2;
 
 
- 	function fillProductList(json){
-	 if (json.result.length == 0) {
-					pListIsEnd = true;
-					return false;
-		}
-		pListPage++;
-		$("#productInfoHtmlTmp").html('');
-		$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
-		$('#produectList').append($("#productInfoHtmlTmp").html()); 
-	  
-		var productimgs = document.querySelectorAll(".productimg");
-		for (var i = 0; i < productimgs.length; i++) { 
-			productimgs[i].addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'prodetail',
-					url: 'prodetail.html?pId=' + this.getAttribute("value")
-				});
+function fillProductList(json) {
+	if (json.result.length == 0) {
+		pListIsEnd = true;
+		return false;
+	}
+	pListPage++;
+	$("#productInfoHtmlTmp").html('');
+	$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
+	$('#produectList').append($("#productInfoHtmlTmp").html());
+
+	var productimgs = document.querySelectorAll(".productimg");
+	for (var i = 0; i < productimgs.length; i++) {
+		productimgs[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'prodetail',
+				url: 'prodetail.html?pId=' + this.getAttribute("value")
 			});
-		}
+		});
+	}
 }
-	 
+
 function initPullEvent() {
 	mui.init({
 		pullRefresh: {
@@ -80,8 +81,8 @@ function initPullEvent() {
 			}
 		}
 	});
-	
-	
+
+
 	/**
 	 * 上拉加载具体业务实现
 	 */
@@ -98,7 +99,7 @@ function initPullEvent() {
 					shopId: shopId
 				}
 			};
-			ajax.jsonpSyncFetch ("product/indexList.action", requestJson,"fillProductList")
+			ajax.jsonpSyncFetch("product/indexList.action", requestJson, "fillProductList")
 		}, 1000);
 	}
 	if (mui.os.plus) {
@@ -120,7 +121,7 @@ function initCategorySelect() {
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncFetch ("product/category.action", requestJson, "fillCategory");
+	ajax.jsonpSyncFetch("product/category.action", requestJson, "fillCategory");
 	//主界面‘显示侧滑菜单’按钮的点击事件
 	//侧滑容器父节点
 	var offCanvasWrapper = mui('#offCanvasWrapper');

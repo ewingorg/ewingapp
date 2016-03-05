@@ -39,6 +39,10 @@ function load(status) {
 		if (json.length == 0) {
 			return false;
 		}
+		
+		if (json.result.list == null){
+			return false;
+		}
 
 		$("#showOrderList").html('');
 		for (var i = 0; i < json.result.list.length; i++) {

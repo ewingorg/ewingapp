@@ -1,8 +1,8 @@
 if (!this.ajax) {
 	var ajax = {};
 }
-/*var serverUrl = "http://100.84.89.236/ewingdoor/";*/
-var serverUrl = "http://100.84.89.236:8080/ewingdoor/";
+var serverUrl = "http://127.0.0.1/ewingdoor/";
+/*var serverUrl = "http://100.84.89.236:8080/ewingdoor/";*/
 
 ajax.jsonpSyncRequest = function(methodUrl, json, sucFn, errFn) {
 

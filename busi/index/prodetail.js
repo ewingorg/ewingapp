@@ -14,35 +14,38 @@ function renderProductDetail() {
 			pId: pId
 		}
 	};
-	ajax.jsonpSyncRequest("product/detail.action", requestJson, function(json) {
-		$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json.result);
-		$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json.result);
-		$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.result.specList);
-		productPriceList = json.result.priceList;
-		productSpecList = json.result.specList;
-		initTapEvent();
-		
-		if(null != json.result.productDetail && json.result.productDetail.isCollect == 1){
-			$("#collectA").addClass('mui-active');
-		}
-	})
+	ajax.jsonpSyncFetch("product/detail.action", requestJson, 'renderProduct');
 }
+
+function renderProduct(json) {
+	$("#productionDetailContainer").loadTemplate($("#productDetailTemplate"), json.result);
+	$("#productionPriceContainer").loadTemplate($("#productPriceTemplate"), json.result);
+	$("#productSpecContrainer").loadTemplate($("#productSpecTemplate"), json.result.specList);
+	productPriceList = json.result.priceList;
+	productSpecList = json.result.specList;
+	initTapEvent();
+
+	if (null != json.result.productDetail && json.result.productDetail.isCollect == 1) {
+		$("#collectA").addClass('mui-active');
+	}
+}
+
 //设置所有点击事件
 function initTapEvent() {
-//	document.getElementById("minusProduct").addEventListener('tap', function() {
-//		var productNum = document.getElementById("productNum").value;
-//		if (productNum >= 1) {
-//			changeNum(-1);
-//		} else {
-//			document.getElementById("productNum").value = 1;
-//		}
-//	});
-//	document.getElementById("plusProduct").addEventListener('tap', function() {
-//		changeNum(1);
-//	});
+	//	document.getElementById("minusProduct").addEventListener('tap', function() {
+	//		var productNum = document.getElementById("productNum").value;
+	//		if (productNum >= 1) {
+	//			changeNum(-1);
+	//		} else {
+	//			document.getElementById("productNum").value = 1;
+	//		}
+	//	});
+	//	document.getElementById("plusProduct").addEventListener('tap', function() {
+	//		changeNum(1);
+	//	});
 
 	document.getElementById("collectA").addEventListener('tap', function() {
-		if(document.getElementById("collectA").className.indexOf("mui-active") != -1){
+		if (document.getElementById("collectA").className.indexOf("mui-active") != -1) {
 			return;
 		}
 		var requestJson = {
@@ -50,15 +53,9 @@ function initTapEvent() {
 				resId: pId
 			}
 		};
-		ajax.jsonpSyncRequest("collect/addCollect.action", requestJson, function(json) {
-			if(json.result == 2000000){
-				$("#collectA").addClass('mui-active');
-			}
-		});
-			
-			
+		ajax.jsonpSyncFetch("collect/addCollect.action", requestJson, 'addColect');
 	});
-	
+
 	document.getElementById("navhome").addEventListener('tap', function() {
 		mui.openWindow({
 			id: 'index',
@@ -80,47 +77,30 @@ function initTapEvent() {
 	document.getElementById("confirmSpec").addEventListener('tap', function() {
 		var action = document.getElementById("confirmSpec").getAttribute("action");
 		//判断是否所有属性已经选择
-		if(!isAllAttrSelected()){
+		if (!isAllAttrSelected()) {
 			return;
 		}
-		
-		if (action == 'addCart') {//加入购物车
+
+		if (action == 'addCart') { //加入购物车
 			var requestJson = {
 				data: {
 					resourceId: pId,
-					priceId:$("#selectPrice").attr("priceId"),
-					count:$("#productNum").val()
+					priceId: $("#selectPrice").attr("priceId"),
+					count: $("#productNum").val()
 				}
 			};
-	
-			ajax.jsonpSyncRequest("cart/addCart.action", requestJson, function(json) {
-				mui.toast('成功加入购物车!');
-				var curCartNum = document.getElementById("productCartNum").innerHTML;
-				if (!curCartNum)
-					curCartNum = 0;
-				document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
-				document.getElementById("specDiv").style.display = 'none';
-			});
-		} else if (action == 'addShoppping') {//加入订单
+
+			ajax.jsonpSyncFetch("cart/addCart.action", requestJson, 'addCart');
+		} else if (action == 'addShoppping') { //加入订单
 			var requestJson = {
 				data: {
 					resourceId: pId,
-					priceId:$("#selectPrice").attr("priceId"),
-					count:$("#productNum").val()
+					priceId: $("#selectPrice").attr("priceId"),
+					count: $("#productNum").val()
 				}
 			};
-	
-			ajax.jsonpSyncRequest("order/addOrder.action", requestJson, function(json) {
-				if(null == json.result.orderId || '' == json.result.orderId){
-					mui.toast("提交失败");
-					return;
-				}
-				document.getElementById("specDiv").style.display = 'none';
-				mui.openWindow({
-					id: 'order',
-					url: 'order/order.html?orderId=' + json.result.orderId
-				});
-			});
+
+			ajax.jsonpSyncFetch("order/addOrder.action", requestJson, 'addOrder');
 		}
 	});
 	//点击购物和购买的时候变换动作类型，方便选择产品规格后跳转
@@ -145,6 +125,32 @@ function initTapEvent() {
 	}
 }
 
+function addColect(json) {
+	if (json.result == 2000000) {
+		$("#collectA").addClass('mui-active');
+	}
+}
+
+function addCart(json) {
+	mui.toast('成功加入购物车!');
+	var curCartNum = document.getElementById("productCartNum").innerHTML;
+	if (!curCartNum)
+		curCartNum = 0;
+	document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
+	document.getElementById("specDiv").style.display = 'none';
+}
+
+function addOrder(json) {
+	if (null == json.result.orderId || '' == json.result.orderId) {
+		mui.toast("提交失败");
+		return;
+	}
+	document.getElementById("specDiv").style.display = 'none';
+	mui.openWindow({
+		id: 'order',
+		url: 'order/order.html?orderId=' + json.result.orderId
+	});
+}
 //function changeNum(changeNum) {
 //	var productNum = document.getElementById("productNum").value;
 //	var fixPrice = getPriceWhileSelectSpec();
@@ -199,24 +205,24 @@ function getPriceWhileSelectSpec() {
 /**
  * 判断是否所有的属性已经选择
  */
-function isAllAttrSelected(){
+function isAllAttrSelected() {
 	var attrSelectorLis = document.body.querySelectorAll('.specGroup');
-	for(var i = 0; i < attrSelectorLis.length; i++){
+	for (var i = 0; i < attrSelectorLis.length; i++) {
 		var specBtns = attrSelectorLis[i].querySelectorAll('.specBtn');
 		var isSelect = false;
-		for(var j=0; j<specBtns.length; j++){
-			if(specBtns[j].className.indexOf("mui-btn-outlined") != -1){
+		for (var j = 0; j < specBtns.length; j++) {
+			if (specBtns[j].className.indexOf("mui-btn-outlined") != -1) {
 				isSelect = true;
 				break;
 			}
 		}
-		
-		if(isSelect == false){
+
+		if (isSelect == false) {
 			var attr = attrSelectorLis[i].querySelector('.detailfront').innerHTML;
-			mui.toast("请选择" +attr);
+			mui.toast("请选择" + attr);
 			return false;
 		}
 	}
-	
+
 	return true;
 }

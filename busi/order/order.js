@@ -4,11 +4,11 @@ var addrData = new Array();
 var addrList;
 
 var self = this;
-	
+
 init();
 
 
-function prepareAddrSelector(data){
+function prepareAddrSelector(data) {
 	(function(mui, doc) {
 		mui.init();
 		mui.ready(function() {
@@ -21,122 +21,138 @@ function prepareAddrSelector(data){
 					$("#addrUl").html('');
 					console.log(items[0]);
 					$("#addrUl").loadTemplate($("#addrLi"), addrList[items[0].value]);
-					
+					$("#addrUl").attr('addrId', addrList[items[0].value].id);
+
 					self.prepareAddrSelector(addrData);
 				});
 			}, false);
 		});
 	})(mui, document);
 }
-			
+
 function init() {
 	var requestJson = {
 		data: {
 			orderId: orderId
 		}
 	};
-	ajax.jsonpSyncRequest("order/find.action", requestJson, function(json) {
-		if (json.length == 0) {
-			return false;
-		}
-
-		$("#addrUl").loadTemplate($("#addrLi"), json.result.defaultAddr);
-		$("#payWayUl").loadTemplate($("#payWayLi"), json.result.payWays);
-		console.log(json.result.payWays);
-		
-		for(var i=0; i<json.result.list.length; i++){
-			$("#tmp").html('');
-			$("#tmp").loadTemplate($("#orderUl"), json.result.list[i]);
-			$("#order").append($("#tmp").html());
-		}
-		$("#tmp").html('');
-		
-		self.analyseTotal();
-
-		addrData.length = 0;
-		addrList = json.result.addrList;
-		for(var i=0; i<addrList.length; i++){
-			addrData.push({
-				value: i,
-				text: addrList[i].receiver + " " + addrList[i].province + " " + addrList[i].city + " " + addrList[i].region + " " + addrList[i].address
-			});
-		}
-		self.prepareAddrSelector(addrData);
-
-		var minusPros = document.querySelectorAll('.minusProduct');
-		for (var i = 0; i < minusPros.length; i++) {
-			minusPros[i].addEventListener('tap', function() {
-				var productNum = this.parentNode.querySelector(".productNum");
-				if (productNum.value >= 1) {
-					self.changeNum(this.parentNode, -1);
-				} else {
-					return;
-				}
-			});
-		}
-		
-		var plusPros = document.querySelectorAll('.plusProduct');
-		for (var i = 0; i < plusPros.length; i++) {
-			plusPros[i].addEventListener('tap', function() {
-				var productNum = this.parentNode.querySelector(".productNum");
-				self.changeNum(this.parentNode, 1);
-			});
-		}
-		
-		var icons = document.body.querySelectorAll('.resIcon');
-		for(var i=0; i<icons.length; i++){
-			icons[i].addEventListener('tap', function(){
-				mui.openWindow({
-					id: 'prodetail',
-					url: '../prodetail.html?pId=' + this.getAttribute("resId") 
-				});
-			});
-		}
-		
-		document.getElementById("confirmBtn").addEventListener('tap', function() {
-			var pros = document.querySelectorAll('.product');
-			var items = new Array();
-			for(var i=0; i<pros.length ; i++){
-				items.push({
-					detailId : pros[i].getAttribute('detailId'),
-					itemCount : pros[i].querySelector('.productNum').value
-				});
-			}
-			
-			var payWayLis = $("#payWayUl").find("li");
-			
-			
-			var requestJson = {
-				data: {
-//					addrId : ,
-//					payWayId : ,
-					list: items
-				}
-			};
-			
-			console.log(requestJson);
-			ajax.jsonpSyncRequest("order/confirm.action", requestJson, function(json) {
-				if (json.length == 0) {
-					return false;
-				}
-					
-					
-						
-				
-			});
-	});	
-	});
-
-	
+	ajax.jsonpSyncFetch("order/find.action", requestJson, 'renderOrder');
 }
 
-function analyseTotal(){
-	var totalPrice = 0;
-	var orderPrices = document.getElementById('orderDiv').querySelectorAll('.orderPrice');
-	for(var i=0; i<orderPrices.length; i++){
-		totalPrice = totalPrice +  parseFloat(orderPrices[i].innerHTML);
+function renderOrder(json) {
+	if (json.length == 0) {
+		return false;
 	}
-	document .getElementById("totalPrice").innerHTML = totalPrice.toFixed(2);
+
+	$("#addrUl").loadTemplate($("#addrLi"), json.result.defaultAddr);
+	$("#payWayUl").loadTemplate($("#payWayLi"), json.result.payWays);
+	console.log(json.result.payWays);
+
+	for (var i = 0; i < json.result.list.length; i++) {
+		$("#tmp").html('');
+		$("#tmp").loadTemplate($("#orderUl"), json.result.list[i]);
+		$("#order").append($("#tmp").html());
+	}
+	$("#tmp").html('');
+
+	self.analyseTotal();
+
+	addrData.length = 0;
+	addrList = json.result.addrList;
+	for (var i = 0; i < addrList.length; i++) {
+		addrData.push({
+			value: i,
+			text: addrList[i].receiver + " " + addrList[i].province + " " + addrList[i].city + " " + addrList[i].region + " " + addrList[i].address
+		});
+	}
+	self.prepareAddrSelector(addrData);
+
+	var minusPros = document.querySelectorAll('.minusProduct');
+	for (var i = 0; i < minusPros.length; i++) {
+		minusPros[i].addEventListener('tap', function() {
+			var productNum = this.parentNode.querySelector(".productNum");
+			if (productNum.value >= 1) {
+				self.changeNum(this.parentNode, -1);
+			} else {
+				return;
+			}
+		});
+	}
+
+	var plusPros = document.querySelectorAll('.plusProduct');
+	for (var i = 0; i < plusPros.length; i++) {
+		plusPros[i].addEventListener('tap', function() {
+			var productNum = this.parentNode.querySelector(".productNum");
+			self.changeNum(this.parentNode, 1);
+		});
+	}
+
+	var icons = document.body.querySelectorAll('.resIcon');
+	for (var i = 0; i < icons.length; i++) {
+		icons[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'prodetail',
+				url: '../prodetail.html?pId=' + this.getAttribute("resId")
+			});
+		});
+	}
+
+	document.getElementById("confirmBtn").addEventListener('tap', function() {
+		var pros = document.querySelectorAll('.product');
+		var items = new Array();
+		for (var i = 0; i < pros.length; i++) {
+			items.push({
+				detailId: pros[i].getAttribute('detailId'),
+				itemCount: pros[i].querySelector('.productNum').value
+			});
+		}
+
+		var payWayLi = $("#payWayUl").find("li.payWay");
+		var payWaySelected = false;
+		for (var i = 0; i < payWayLi.length; i++) {
+			if (payWayLi[i].className.indexOf("mui-selected") != -1) {
+				payWaySelected = true;
+				break;
+			}
+		}
+		if (!payWaySelected) {
+			ewing.alert("提示", "请选择支付方式", null);
+			return;
+		}
+
+
+		var requestJson = {
+			data: {
+				addrId: $("#addrUl").find('li').attr('addrId'),
+				payWayId: payWayLi.find('a').attr("paywayid"),
+				list: items
+			}
+		};
+
+		console.log(requestJson);
+		ajax.jsonpSyncFetch("order/commitOrder.action", requestJson, 'submitOrder');
+	});
+}
+
+function submitOrder(json) {
+	if (json.length == 0) {
+		return false;
+	}
+
+	//开始支付界面
+	if (json.result == 2000000) {
+
+	}
+}
+
+function analyseTotal() {
+	var totalPrice = 0;
+	var orderPriceDivs = document.body.querySelectorAll('.orderDiv');
+	for (var i = 0; i < orderPriceDivs.length; i++) {
+		var orderPrice = orderPriceDivs[i].querySelector(".orderPrice");
+		totalPrice = totalPrice + parseFloat(orderPrice.innerHTML);
+	}
+	document.getElementById("totalPrice").innerHTML = totalPrice.toFixed(2);
 }
 
 function changeNum(pNode, changeNum) {
