@@ -45,15 +45,17 @@ function initTapEvent() {
 	//	});
 
 	document.getElementById("collectA").addEventListener('tap', function() {
-		if (document.getElementById("collectA").className.indexOf("mui-active") != -1) {
-			return;
-		}
 		var requestJson = {
 			data: {
 				resId: pId
 			}
 		};
-		ajax.jsonpSyncFetch("collect/addCollect.action", requestJson, 'addColect');
+
+		if (document.getElementById("collectA").className.indexOf("mui-active") != -1) {
+			ajax.jsonpSyncFetch("collect/delCollect.action", requestJson, 'delCollect');
+		} else {
+			ajax.jsonpSyncFetch("collect/addCollect.action", requestJson, 'addCollect');
+		}
 	});
 
 	document.getElementById("navhome").addEventListener('tap', function() {
@@ -125,8 +127,18 @@ function initTapEvent() {
 	}
 }
 
-function addColect(json) {
+function addCollect(json) {
 	if (json.result == 2000000) {
+		$("#collectA").addClass('mui-active');
+	}else{
+		$("#collectA").removeClass('mui-active');
+	}
+}
+
+function delCollect(json) {
+	if (json.result == 2000000) {
+		$("#collectA").removeClass('mui-active');
+	}else{
 		$("#collectA").addClass('mui-active');
 	}
 }
