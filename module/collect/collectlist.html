@@ -7,110 +7,89 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../../fonts/css/mui.css">
 		<!--App自定义的css-->
 		<link rel="stylesheet" type="text/css" href="../../fonts/css/app.css" />
 		<link rel="stylesheet" type="text/css" href="../../fonts/css/iconfont.css" />
+		<style>
+			.title {
+				margin: 20px 15px 10px;
+				font-size: 15px;
+			}
+			
+			#offCanvasSide {
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42;
+			} 
+			.topLogo img{
+				width:100%;
+			}
+		</style>
 
-		<script type="text/html" id="collectUl">
-			<ul class="mui-table-view resUl" id="collectUl">
-				<li class="mui-table-view-cell mui-media">
-					<div class="mui-left">
-						<img class="mui-pull-left" style="height: 80px;width: 80px;padding-right: 10px;" data-src="icon">
-						<p class="detailfront" data-content="productName"></p>
-						<p class='mui-ellipsis' style="padding-top: 10px;">规格：普通包装</p>
-
-					</div>
-					<div style="float: right;margin-top: -50px;text-align: right;vertical-align: top;">
-						<p data-content-append="unitPrice">￥</p>
-						<p data-content-append="stockNum">库存</p>
-					</div>
-				</li>
-			</ul>
-		</script>
 	</head>
 
 	<body>
 
-		<style>
-			body {
-				margin: 0;
-				line-height: 1.4;
-				color: #555555;
-				font-size: 14px;
-			}
-			
-			.mui-control-content {
-				background-color: white;
-				min-height: 215px;
-			}
-			
-			.mui-control-content .mui-loading {
-				margin-top: 50px;
-			}
-			
-			.detailfront {
-				line-height: 1.4;
-				color: #555555;
-				font-size: 16px;
-			}
-			
-			.mui-table-view {
-				margin-top: 20px;
-			}
-		</style>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">我的收藏夹</h1>
+			<div>
+				<h1 class="mui-title">我的收藏夹</h1>
+			</div>
 		</header>
-		<div class="mui-content">
-			<div id="slider" class="mui-slider">
-				<div id="collectDiv">
 
+		<div id="offCanvasWrapper" class="mui-content mui-off-canvas-wrap mui-draggable mui-slide-in">
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+				<!--<header class="mui-bar mui-bar-nav">
+					<div>
+						<span style="float:right;margin-right: 10px;line-height: 2.5;color:#555555;font-size: 16px;" id="orderList">| 订单中心</span>
+						<span style="float:right;margin-right: 5px;color:#555555;" class="mui-icon iconfont icon-gouwuche" id="prodcutCart"><span class="mui-badge" id="productCartNum"></span></span>
+					</div>
+				</header>-->
+
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!--		<div name="KEY_TOP_LOGO" class="topLogo">
+							<!--<img width="100%" src="../images/haixiantitle.jpg">
+						</div>-->
+						<ul class="mui-table-view mui-grid-view" id="produectList">
+						</ul>
+					</div>
 				</div>
 			</div>
-
 		</div>
-
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/jquery-1.10.1.min.js"></script>
-		<script src="../../js/jquery.loadTemplate-1.4.4.min.js"></script>
-		<script src="../../busi/js/ajax.js"></script>
-		<script src="../../js/jquery.url.js"></script>
-		<script src="../../busi/collect/collectlist.js"></script>
-
-		<script>
-			/*mui.init({
-							swipeBack: false
-						});
-						(function($) {
-							$('.mui-scroll-wrapper').scroll({
-								indicators: true //是否显示滚动条
-							});
-							var html2 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第二个选项卡子项-1</li><li class="mui-table-view-cell">第二个选项卡子项-2</li><li class="mui-table-view-cell">第二个选项卡子项-3</li><li class="mui-table-view-cell">第二个选项卡子项-4</li><li class="mui-table-view-cell">第二个选项卡子项-5</li></ul>';
-							var html3 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第三个选项卡子项-1</li><li class="mui-table-view-cell">第三个选项卡子项-2</li><li class="mui-table-view-cell">第三个选项卡子项-3</li><li class="mui-table-view-cell">第三个选项卡子项-4</li><li class="mui-table-view-cell">第三个选项卡子项-5</li></ul>';
-							var item2 = document.getElementById('item2mobile');
-							var item3 = document.getElementById('item3mobile');
-							document.getElementById('slider').addEventListener('slide', function(e) {
-								if (e.detail.slideNumber === 1) {
-									if (item2.querySelector('.mui-loading')) {
-										setTimeout(function() {
-											item2.querySelector('.mui-scroll').innerHTML = html2;
-										}, 500);
-									}
-								} else if (e.detail.slideNumber === 2) {
-									if (item3.querySelector('.mui-loading')) {
-										setTimeout(function() {
-											item3.querySelector('.mui-scroll').innerHTML = html3;
-										}, 500);
-									}
-								}
-							});
-						})(mui);*/
-		</script>
-
 	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/jquery-1.10.1.min.js"></script>
+	<script src="../../js/jquery.loadTemplate-1.4.4.min.js"></script>
+	<script src="../../busi/js/ajax.js"></script>
+	<script src="../../busi/js/keytemplate.js"></script>
+	<script src="../../js/jquery.url.js"></script>
+
+	<script src="../../busi/collect/collectlist.js"></script>
+	<!-- 收藏夹列表模板-->
+	<div id="collectHtmlTmp" style="display: none;"></div>
+	<script type="text/html" id="lightCollectTemplate">
+		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
+			<div style="margin:5px 5px 5px -2px;">
+				<a href="#">
+					<img class="mui-media-object productimg" data-src="icon" data-value="id">
+					<div class="mui-media-body" style="text-align:left;margin:10px 0px 5px 5px;float:left;font-size: 14px;font-weight: 400; "><span data-content="shortDesc"></span>
+					</div>
+				</a> <span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400;"> ￥  <span data-content="unitPrice"></span></span>
+				<!--<span style="margin:10px 10px 10px;float:right">
+				<!--<button type = "button"class = "mui-btn mui-btn-warning" style = "width: 50px;height: 28px;font-size: 12px" >订购 </button>  
+				</span>-->
+			</div>
+		</li>
+	</script>
+
+	<!--<script type="text/html" id="keyTemplate">
+			<a href="#">
+				 <img data-src="imageUrl"  data-template-bind='[{"attribute": "blockid", "value": "id"},{"attribute": "blockurl", "value": "linkUrl"}]'>
+			</a> 
+	</script>-->
 
 </html>

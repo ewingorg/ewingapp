@@ -1,5 +1,7 @@
 //获取页面传来的参数
-var shopId = jQuery.url.param("shopId");
+var shopId = jQuery.url.param('shopId');
+var self = this;
+
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
@@ -82,7 +84,6 @@ function initPullEvent() {
 		}
 	});
 
-
 	/**
 	 * 上拉加载具体业务实现
 	 */
@@ -91,14 +92,17 @@ function initPullEvent() {
 			mui('#offCanvasContentScroll').pullRefresh().endPullupToRefresh((pListIsEnd)); //参数为true代表没有更多数据了。
 			var table = document.body.querySelector('.pulltable');
 			var cells = document.body.querySelectorAll('.mui-table-view-cell');
+			console.log(self.shopId);
+			
 			var requestJson = {
 				data: {
 					isHot: "0",
 					page: pListPage,
 					pageSize: pListPageSize,
-					shopId: shopId
+					shopId: self.shopId
 				}
 			};
+			
 			ajax.jsonpSyncFetch("product/indexList.action", requestJson, "fillProductList")
 		}, 1000);
 	}
