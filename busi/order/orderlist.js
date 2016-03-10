@@ -110,5 +110,15 @@ function load(status) {
 				});
 			});
 		}
+		
+		var expressBtns = document.body.querySelectorAll('.seeExpress');
+		for(var i=0; i<expressBtns.length; i++){
+			expressBtns[i].addEventListener('tap', function(){
+				mui.openWindow({
+					id: 'express',
+					url: '../express/express.html?pId=' + this.getAttribute("resId") 
+				});	
+			})
+		}
 	});
 }
