@@ -11,6 +11,8 @@
 		<!--App自定义的css-->
 		<link rel="stylesheet" type="text/css" href="../fonts/css/app.css" />
 		<link rel="stylesheet" type="text/css" href="../fonts/css/iconfont.css" />
+		<!--<link rel="stylesheet" type="text/css" href="../busi/css/image.css" />-->
+		
 		<style>
 			.title {
 				margin: 20px 15px 10px;
@@ -61,7 +63,7 @@
 				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<div name="KEY_TOP_LOGO" class="topLogo">
-							<!--<img width="100%" src="../images/haixiantitle.jpg">-->
+							<img width="100%" src="../images/haixiantitle.jpg">
 						</div>
 						<ul class="mui-table-view mui-grid-view" id="produectList">
 						</ul>
@@ -102,7 +104,7 @@
 		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
 			<div style="margin:5px 5px 5px -2px;">
 				<a href="#">
-					<img class="mui-media-object productimg" data-src="imageUrl" data-value="id">
+					<img class="mui-media-object productimg" style="height:inherit;width:inherit;" data-src="imageUrl" data-value="id">
 					<div class="mui-media-body" style="text-align:left;margin:10px 0px 5px 5px;float:left;font-size: 14px;font-weight: 400; "><span data-content="shortDesc"></span>
 					</div>
 				</a> <span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400;"> ￥  <span data-content="price"></span></span>
@@ -114,10 +116,10 @@
 	</script>
 	<!-- 分类模板-->
 	<script type="text/html" id="categoryLi">
-			<li class="mui-table-view-cell">
-				<a class="mui-navigate-right" data-content="name" data-template-bind='[{"attribute": "catId", "value": "id"}]'>
-				</a>
-			</li>
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right" data-content="name" data-template-bind='[{"attribute": "catId", "value": "id"}]'>
+			</a>
+		</li>
 	</script>
 	
 	<script type="text/html" id="keyTemplate">

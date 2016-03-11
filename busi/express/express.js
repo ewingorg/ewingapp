@@ -1,34 +1,10 @@
 //获取页面传来的参数
 var orderId = jQuery.url.param("orderId");
-var addrData = new Array();
-var addrList;
+var cargoName = jQuery.url.param("cargoName"); 
+var cargoNumber = jQuery.url.param("cargoNumber"); 
 
 var self = this;
-
 init();
-
-
-function prepareAddrSelector(data) {
-	(function(mui, doc) {
-		mui.init();
-		mui.ready(function() {
-			//普通示例
-			var userPicker = new mui.PopPicker();
-			userPicker.setData(self.addrData);
-			var showUserPickerButton = doc.body.querySelector('.addrLi');
-			showUserPickerButton.addEventListener('tap', function(event) {
-				userPicker.show(function(items) {
-					$("#addrUl").html('');
-					console.log(items[0]);
-					$("#addrUl").loadTemplate($("#addrLi"), addrList[items[0].value]);
-					$("#addrUl").attr('addrId', addrList[items[0].value].id);
-
-					self.prepareAddrSelector(addrData);
-				});
-			}, false);
-		});
-	})(mui, document);
-}
 
 function init() {
 	var requestJson = {
