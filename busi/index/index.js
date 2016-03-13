@@ -1,21 +1,35 @@
 //获取页面传来的参数
+var self = this;
 var shopId = jQuery.url.param("shopId");
-var categoryId;//分类id
+//是否没有数据
+var pListIsEnd = false;
+//产品页码
+var pListPage = 1;
+//产品页大小
+var pListPageSize = 2;
+
+var catId; //分类id
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
 
-
-keytemplate.initTemplateKey(shopId,'index.html');
+keytemplate.initTemplateKey(shopId, 'index.html');
 initCategorySelect();
 initPullEvent();
 initTapEvent();
 
+function initPage() {
+	pListIsEnd = false;
+	//产品页码
+	pListPage = 1;
+	//产品页大小
+	pListPageSize = 2;
+	self.catId = 0;
+	$("#produectList").html('');
+}
 
-	 
 //设置所有事件
 function initTapEvent() {
-
 	document.getElementById("orderList").addEventListener('tap', function() {
 		mui.openWindow({
 			id: 'orderlist',
@@ -35,84 +49,72 @@ function initTapEvent() {
 			url: 'order/ordercenter.html'
 		});
 	});
+
+	document.getElementById("mainBtn").addEventListener('tap', function() {
+		self.initPage();
+		self.pullupRefresh();
+	});
 }
 
-function fillCategory(json){
-	 
-		$("#categoryUl").html('');
-		$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
+function fillCategory(json) {
+	$("#categoryUl").html('');
+	$("#categoryUl").loadTemplate($("#categoryLi"), json.result);
+
+	var catAs = document.body.querySelectorAll('.catA');
+	for (var i = 0; i < catAs.length; i++) {
+		catAs[i].addEventListener('tap', function() {
+			mui('#offCanvasWrapper').offCanvas('close'); //关闭侧滑菜单
+
+			self.initPage();
+			self.catId = this.getAttribute('catId');
+			self.pullupRefresh();
+		});
+	}
 }
 
-//是否没有数据
-	var pListIsEnd = false;
-	//产品页码
-	var pListPage = 1;
-	//产品页大小
-	var pListPageSize = 2;
+function fillProductList(json) {
+	if (json.result.length == 0) {
+		pListIsEnd = true;
+		return false;
+	}
+	pListPage++;
+	$("#productInfoHtmlTmp").html('');
+	$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
+	$('#produectList').append($("#productInfoHtmlTmp").html());
 
-
- 	function fillProductList(json){
-	 if (json.result.length == 0) {
-					pListIsEnd = true;
-					return false;
-		}
-		pListPage++;
-		$("#productInfoHtmlTmp").html('');
-		$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
-		$('#produectList').append($("#productInfoHtmlTmp").html()); 
-	  
-		var productimgs = document.querySelectorAll(".productimg");
-		for (var i = 0; i < productimgs.length; i++) { 
-			productimgs[i].addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'prodetail',
-					url: 'prodetail.html?pId=' + this.getAttribute("value")
-				});
+	var productimgs = document.querySelectorAll(".productimg");
+	for (var i = 0; i < productimgs.length; i++) {
+		productimgs[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'prodetail',
+				url: 'prodetail.html?pId=' + this.getAttribute("value")
 			});
-		}
-		
-		var buyBtns = document.body.querySelectorAll(".buyBtn");
-		for (var i = 0; i < buyBtns.length; i++) { 
-			buyBtns[i].addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'prodetail',
-					url: 'prodetail.html?pId=' + this.getAttribute("proId")
-				});
+		});
+	}
+
+	var buyBtns = document.body.querySelectorAll(".buyBtn");
+	for (var i = 0; i < buyBtns.length; i++) {
+		buyBtns[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'prodetail',
+				url: 'prodetail.html?pId=' + this.getAttribute("proId")
 			});
-		}
+		});
+	}
 }
-	 
+
 function initPullEvent() {
 	mui.init({
 		pullRefresh: {
 			container: '#offCanvasContentScroll',
 			up: {
 				contentrefresh: '正在加载...',
-				callback: pullupRefresh
+				callback: self.pullupRefresh
 			}
 		}
 	});
-	
-	
-	/**
-	 * 上拉加载具体业务实现
-	 */
-	function pullupRefresh() {
-		setTimeout(function() {
-			mui('#offCanvasContentScroll').pullRefresh().endPullupToRefresh((pListIsEnd)); //参数为true代表没有更多数据了。
-			var table = document.body.querySelector('.pulltable');
-			var cells = document.body.querySelectorAll('.mui-table-view-cell');
-			var requestJson = {
-				data: {
-					isHot: "1",
-					page: pListPage,
-					pageSize: pListPageSize,
-					shopId: shopId
-				}
-			};
-			ajax.jsonpSyncFetch ("product/indexList.action", requestJson,"fillProductList")
-		}, 1000);
-	}
+
+
 	if (mui.os.plus) {
 		mui.plusReady(function() {
 			setTimeout(function() {
@@ -126,13 +128,32 @@ function initPullEvent() {
 	}
 }
 
+/**
+ * 上拉加载具体业务实现
+ */
+function pullupRefresh() {
+	mui('#offCanvasContentScroll').pullRefresh().endPullupToRefresh((pListIsEnd)); //参数为true代表没有更多数据了。
+	var table = document.body.querySelector('.pulltable');
+	var cells = document.body.querySelectorAll('.mui-table-view-cell');
+	var requestJson = {
+		data: {
+			isHot: "1",
+			categoryId: self.catId,
+			page: pListPage,
+			pageSize: pListPageSize,
+			shopId: shopId
+		}
+	};
+	ajax.jsonpSyncFetch("product/indexList.action", requestJson, "fillProductList");
+}
+
 function initCategorySelect() {
 	var requestJson = {
 		data: {
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncFetch ("product/category.action", requestJson, "fillCategory");
+	ajax.jsonpSyncFetch("product/category.action", requestJson, "fillCategory");
 	//主界面‘显示侧滑菜单’按钮的点击事件
 	//侧滑容器父节点
 	var offCanvasWrapper = mui('#offCanvasWrapper');
@@ -152,6 +173,7 @@ function initCategorySelect() {
 	document.getElementById('offCanvasHide').addEventListener('tap', function() {
 		offCanvasWrapper.offCanvas('close');
 	});
+
 	//主界面和侧滑菜单界面均支持区域滚动；
 	mui('#offCanvasSideScroll').scroll();
 	mui('#offCanvasContentScroll').scroll();
