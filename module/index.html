@@ -28,12 +28,10 @@
 				width:100%;
 			}
 		</style>
-		
 	
 	</head>
 
 	<body>
-
 		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
 			<!-- 菜单容器 -->
 			<aside id="offCanvasSide" class="mui-off-canvas-left" style="background-color:#FFFFFF;filter:alpha(opacity=90); -moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; ">
@@ -43,7 +41,6 @@
 							<p style="margin: 10px 15px;">
 								<a><span id="offCanvasHide" class="mui-icon mui-icon-arrowleft"></span></a>
 							</p>
-
 						</div>
 						<div class="title">产品分类：</div>
 						<ul class="mui-table-view" id="categoryUl">
@@ -70,7 +67,6 @@
 					</div>
 				</div>
 				<nav class="mui-bar mui-bar-tab">
-
 					<a class="mui-tab-item" href="#tabbar-with-chat">
 						<span class="mui-icon mui-icon-home"> </span>
 						<span class="mui-tab-label">商城主页</span>
@@ -96,8 +92,8 @@
 	<script src="../busi/js/ajax.js"></script>
 	<script src="../busi/js/keytemplate.js"></script>
 	<script src="../js/jquery.url.js"></script>
-
 	<script src="../busi/index/index.js"></script> 
+	
 	<!-- 产品列表模板-->
 	<div id="productInfoHtmlTmp" style="display: none;"></div>
 	<script type="text/html" id="lightProductTemplate">
@@ -109,11 +105,12 @@
 					</div>
 				</a> <span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400;"> ￥  <span data-content="price"></span></span>
 				<span style="margin:10px 10px 10px;float:right">
-				<button type = "button"class = "mui-btn mui-btn-warning" style = "width: 50px;height: 28px;font-size: 12px" >订购 </button>  
+				<button type = "button" class = "mui-btn mui-btn-warning buyBtn" style = "width: 50px;height: 28px;font-size: 12px" data-template-bind='[{"attribute": "proId", "value": "id"}]'>订购 </button>  
 				</span>
 			</div>
 		</li>
 	</script>
+	
 	<!-- 分类模板-->
 	<script type="text/html" id="categoryLi">
 		<li class="mui-table-view-cell">

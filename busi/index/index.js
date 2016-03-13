@@ -1,8 +1,10 @@
 //获取页面传来的参数
 var shopId = jQuery.url.param("shopId");
+var categoryId;//分类id
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
+
 
 keytemplate.initTemplateKey(shopId,'index.html');
 initCategorySelect();
@@ -68,6 +70,16 @@ function fillCategory(json){
 				});
 			});
 		}
+		
+		var buyBtns = document.body.querySelectorAll(".buyBtn");
+		for (var i = 0; i < buyBtns.length; i++) { 
+			buyBtns[i].addEventListener('tap', function() {
+				mui.openWindow({
+					id: 'prodetail',
+					url: 'prodetail.html?pId=' + this.getAttribute("proId")
+				});
+			});
+		}
 }
 	 
 function initPullEvent() {
@@ -92,7 +104,7 @@ function initPullEvent() {
 			var cells = document.body.querySelectorAll('.mui-table-view-cell');
 			var requestJson = {
 				data: {
-					isHot: "0",
+					isHot: "1",
 					page: pListPage,
 					pageSize: pListPageSize,
 					shopId: shopId
