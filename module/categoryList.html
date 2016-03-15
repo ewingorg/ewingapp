@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>海鲜街</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../fonts/css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../fonts/css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../fonts/css/iconfont.css" />
+		<!--<link rel="stylesheet" type="text/css" href="../busi/css/image.css" />-->
+		
+		<style>
+			.title {
+				margin: 20px 15px 10px;
+				font-size: 15px;
+			}
+			
+			#offCanvasSide {
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42;
+			} 
+			.topLogo img{
+				width:100%;
+			}
+		</style>
+	
+	</head>
+
+	<body>
+		<div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+			<!-- 菜单容器 -->
+			<aside id="offCanvasSide" class="mui-off-canvas-left" style="background-color:#FFFFFF;filter:alpha(opacity=90); -moz-opacity:0.9; -khtml-opacity: 0.9; opacity: 0.9; ">
+				<div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="content">
+							<p style="margin: 10px 15px;">
+								<a><span id="offCanvasHide" class="mui-icon mui-icon-arrowleft"></span></a>
+							</p>
+						</div>
+						<div class="title">产品分类：</div>
+						<ul class="mui-table-view" id="categoryUl">
+						</ul>
+					</div>
+				</div>
+			</aside>
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+				<header class="mui-bar mui-bar-nav" id="catHeader">
+				</header>
+
+				<div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!--<div name="KEY_TOP_LOGO" class="topLogo">
+							<img width="100%" src="../images/haixiantitle.jpg">
+						</div>-->
+						<ul class="mui-table-view mui-grid-view" id="produectList">
+						</ul>
+					</div>
+				</div>
+				<nav class="mui-bar mui-bar-tab">
+					<a class="mui-tab-item" href="#tabbar-with-chat" id="mainBtn"> 
+						<span class="mui-icon mui-icon-home"> </span>
+						<span class="mui-tab-label">商城主页</span>
+					</a>
+					<a class="mui-tab-item" href="#" id="offCanvasShow">
+						<span class="mui-icon mui-icon-star"></span>
+						<span class="mui-tab-label">分类</span>
+					</a>
+					<a class="mui-tab-item" href="#tabbar-with-map" id="accountCenter">
+						<span class="mui-icon mui-icon-gear"></span>
+						<span class="mui-tab-label">会员中心</span>
+					</a>
+				</nav>
+
+				<!-- 弹出分类菜单时候，主菜单配合变黑 -->
+				<div class="mui-off-canvas-backdrop"></div>
+			</div>
+		</div>
+	</body>
+	
+	<!-- 产品列表模板-->
+	<div id="productInfoHtmlTmp" style="display: none;"></div>
+	<script type="text/html" id="lightProductTemplate">
+		<li class="mui-table-view-cell mui-media mui-col-xs-6" style="border-right: 1px solid gainsboro;border-bottom: 1px solid gainsboro;">
+			<div style="margin:5px 5px 5px -2px;">
+				<a href="#">
+					<img class="mui-media-object productimg" style="height:inherit;width:inherit;" data-src="imageUrl" data-value="id">
+					<div class="mui-media-body" style="text-align:left;margin:10px 0px 5px 5px;float:left;font-size: 14px;font-weight: 400; "><span data-content="shortDesc"></span>
+					</div>
+				</a> <span style="margin:10px 0px 5px 5px;float:left;color:orange;font-size: 15px;font-weight: 400;"> ￥  <span data-content="price"></span></span>
+				<span style="margin:10px 10px 10px;float:right">
+				<button type = "button" class = "mui-btn mui-btn-warning buyBtn" style = "width: 50px;height: 28px;font-size: 12px" data-template-bind='[{"attribute": "proId", "value": "id"}]'>订购 </button>  
+				</span>
+			</div>
+		</li>
+	</script>
+	
+	<!-- 分类模板-->
+	<script type="text/html" id="categoryLi">
+		<li class="mui-table-view-cell">
+			<a class="mui-navigate-right catA" data-content="name" data-template-bind='[{"attribute": "catId", "value": "id"}]'>
+			</a>
+		</li>
+	</script>
+	
+	<script type="text/html" id="keyTemplate">
+			<a href="#">
+				 <img data-src="imageUrl"  data-template-bind='[{"attribute": "blockid", "value": "id"},{"attribute": "blockurl", "value": "linkUrl"}]'>
+			</a> 
+	</script>
+	
+	<script type="text/html" id="header">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title" data-content="category"></h1>
+	</script>
+	
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-1.10.1.min.js"></script>
+	<script src="../js/jquery.loadTemplate-1.4.4.min.js"></script>
+	<script src="../busi/js/ajax.js"></script>
+	<script src="../busi/js/keytemplate.js"></script>
+	<script src="../js/jquery.url.js"></script>
+	<script src="../busi/index/categoryList.js"></script>
+</html>

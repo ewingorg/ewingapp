@@ -1,6 +1,7 @@
 //获取页面传来的参数
 var self = this;
 var shopId = jQuery.url.param("shopId");
+var catId = jQuery.url.param("catId");
 //是否没有数据
 var pListIsEnd = false;
 //产品页码
@@ -8,7 +9,6 @@ var pListPage = 1;
 //产品页大小
 var pListPageSize = 2;
 
-var catId; //分类id
 mui.init({
 	swipeBack: true //启用右滑关闭功能
 });
@@ -30,19 +30,6 @@ function initPage() {
 
 //设置所有事件
 function initTapEvent() {
-	document.getElementById("orderList").addEventListener('tap', function() {
-		mui.openWindow({
-			id: 'orderlist',
-			url: 'order/orderlist.html'
-		});
-	});
-
-	document.getElementById("prodcutCart").addEventListener('tap', function() {
-		mui.openWindow({
-			id: 'producatCart',
-			url: 'order/procart.html'
-		});
-	});
 	document.getElementById("accountCenter").addEventListener('tap', function() {
 		mui.openWindow({
 			id: 'ordercenter',
@@ -78,10 +65,12 @@ function fillProductList(json) {
 		pListIsEnd = true;
 		return false;
 	}
+	
 	pListPage++;
 	$("#productInfoHtmlTmp").html('');
-	$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result);
+	$("#productInfoHtmlTmp").loadTemplate($("#lightProductTemplate"), json.result.list);
 	$('#produectList').append($("#productInfoHtmlTmp").html());
+	$('#catHeader').loadTemplate($("#header"), json.result);
 
 	var productimgs = document.querySelectorAll(".productimg");
 	for (var i = 0; i < productimgs.length; i++) {
@@ -138,14 +127,13 @@ function pullupRefresh() {
 	var cells = document.body.querySelectorAll('.mui-table-view-cell');
 	var requestJson = {
 		data: {
-			isHot: "0",
 			categoryId: self.catId,
 			page: pListPage,
 			pageSize: pListPageSize,
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncFetch("product/indexList.action", requestJson, "fillProductList");
+	ajax.jsonpSyncFetch("product/categoryList.action", requestJson, "fillProductList");
 }
 
 function initCategorySelect() {
