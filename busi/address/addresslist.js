@@ -101,6 +101,7 @@ function renderAddrList(json) {
 				}
 			};
 
+			this.parentNode.parentNode.style.display = 'none';
 			ajax.jsonpSyncFetch("address/delAddress.action", requestJson, 'delAddr');
 		});
 	}

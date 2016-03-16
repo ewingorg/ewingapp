@@ -32,17 +32,22 @@
 
 		<script type="text/html" id="cartLi">
 			<li class="mui-table-view-cell mui-media">
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label style="margin-left: -15px;"><img class="mui-media-object mui-pull-left" data-src="icon" data-template-bind='[{"attribute": "resId", "value": "resourceId"}]'>
-						<p class="cartItemfront" data-content="productName"></p>
-						<p class='mui-ellipsis' style="padding-top: 10px;" data-content-append="unitPrice">￥</p>
-					</label>
-					<input name="checkbox" type="checkbox" style="width: 1px;height: 1px;left:1px;" data-template-bind='[{"attribute": "cartId", "value": "id"}]'>
+				<div class="mui-slider-right mui-disabled">
+					<a class="mui-btn mui-btn-red delCart" data-template-bind='[{"attribute": "cartId", "value": "id"}]'>删除</a>
 				</div>
-				<div class="mui-numbox" style="float: right;margin-top: -30px;">
-					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-					<input class="mui-input-numbox" type="number" readonly="true" data-value="itemCount" data-template-bind='[{"attribute": "pri", "value": "unitPrice"}]' />
-					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+				<div class="mui-slider-handle">
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label style="margin-left: -15px;"><img class="mui-media-object mui-pull-left" data-src="icon" data-template-bind='[{"attribute": "resId", "value": "resourceId"}]'>
+							<p class="cartItemfront" data-content="productName"></p>
+							<p class='mui-ellipsis' style="padding-top: 10px;" data-content-append="unitPrice">￥</p>
+						</label>
+						<input name="checkbox" type="checkbox" style="width: 1px;height: 1px;left:1px;" data-template-bind='[{"attribute": "cartId", "value": "id"}]'>
+					</div>
+					<div class="mui-numbox" style="float: right;margin-top: -30px;">
+						<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+						<input class="mui-input-numbox" type="number" readonly="true" data-value="itemCount" data-template-bind='[{"attribute": "pri", "value": "unitPrice"}]' />
+						<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+					</div>
 				</div>
 			</li>
 		</script>
@@ -54,7 +59,6 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<div>
 				<h1 class="mui-title">购物车</h1>
-				<span style="float:right;color:#555555;" class="mui-icon mui-icon-trash"></span>
 			</div>
 		</header>
 		<nav class="mui-bar mui-bar-tab">

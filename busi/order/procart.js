@@ -127,7 +127,7 @@ function renderCart(json) {
 	$("#cartUl").loadTemplate($("#cartLi"), json.result.list);
 
 	//添加listener
-	var lis = document.querySelectorAll(".mui-table-view-cell");
+	var lis = document.body.querySelectorAll(".mui-table-view-cell");
 	for (var i = 0; i < lis.length; i++) {
 		lis[i].querySelector('img').addEventListener('tap', function() {
 			mui.openWindow({
@@ -162,6 +162,20 @@ function renderCart(json) {
 			if (this.parentNode.parentNode.querySelector('input[type=checkbox]').checked == true) {
 				$("#totalPrice").html((parseFloat($("#totalPrice").html()) - parseFloat(input.getAttribute('pri'))).toFixed(2));
 			}
+		});
+	}
+
+	var delBtns = document.body.querySelectorAll('.delCart');
+	for (var i = 0; i < delBtns.length; i++) {
+		delBtns[i].addEventListener('tap', function() {
+			var requestJson = {
+				data: {
+					cartId: this.getAttribute('cartId')
+				}
+			};
+			
+			this.parentNode.parentNode.style.display = 'none';
+			ajax.jsonpSyncFetch("cart/delCart.action", requestJson, 'delCart');
 		});
 	}
 
