@@ -93,20 +93,21 @@ function renderAddrList(json) {
 
 	var addresses = document.body.querySelectorAll('.address');
 	for (var i = 0; i < addresses.length; i++) {
-		var id = addresses[i].getAttribute('addId');
 		addresses[i].querySelector('.delAddr').addEventListener('tap', function() {
 			var requestJson = {
 				data: {
 					id: this.getAttribute('addId')
 				}
 			};
-
+			
 			this.parentNode.parentNode.style.display = 'none';
 			ajax.jsonpSyncFetch("address/delAddress.action", requestJson, 'delAddr');
 		});
 	}
 
 }
+
+
 
 
 if (mui.os.plus) {
@@ -124,6 +125,4 @@ function delAddr(json) {
 		pListIsEnd = true;
 		return false;
 	}
-
-	self.pullupRefresh();
 }
