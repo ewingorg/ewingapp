@@ -48,7 +48,8 @@ document.getElementById("addAddress").addEventListener('tap', function() {
 		ewing.alert("提示", "详细地址不能为空哦", null);
 		return;
 	}
-
+	
+	$("#addAddress").attr("disabled", true);
 
 	var requestJson = {
 		data: {
@@ -62,11 +63,17 @@ document.getElementById("addAddress").addEventListener('tap', function() {
 			address: $("#address").val()
 		}
 	};
-	ajax.jsonpSyncRequest("address/saveAddr.action", requestJson, 'addAddr');
+	ajax.jsonpSyncFetch("address/saveAddr.action", requestJson, 'addAddr');
 });
 
 function addAddr(json) {
 	if (null == json || '' == json) {
+		$("#addAddress").attr("disabled", flase);
+		return false;
+	}
+	
+	if(json.result != 2000000){
+		$("#addAddress").attr("disabled", flase);
 		return false;
 	}
 

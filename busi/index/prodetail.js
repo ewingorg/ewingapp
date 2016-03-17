@@ -91,7 +91,8 @@ function initTapEvent() {
 					count: $("#productNum").val()
 				}
 			};
-
+			
+			document.getElementById("specDiv").style.display = 'none';
 			ajax.jsonpSyncFetch("cart/addCart.action", requestJson, 'addCart');
 		} else if (action == 'addShoppping') { //加入订单
 			var requestJson = {
@@ -101,7 +102,8 @@ function initTapEvent() {
 					count: $("#productNum").val()
 				}
 			};
-
+			
+			document.getElementById("specDiv").style.display = 'none';
 			ajax.jsonpSyncFetch("order/addOrder.action", requestJson, 'addOrder');
 		}
 	});
@@ -149,7 +151,6 @@ function addCart(json) {
 	if (!curCartNum)
 		curCartNum = 0;
 	document.getElementById("productCartNum").innerHTML = Number.parseInt(curCartNum) + 1;
-	document.getElementById("specDiv").style.display = 'none';
 }
 
 function addOrder(json) {
@@ -157,7 +158,7 @@ function addOrder(json) {
 		mui.toast("提交失败");
 		return;
 	}
-	document.getElementById("specDiv").style.display = 'none';
+	
 	mui.openWindow({
 		id: 'order',
 		url: 'order/order.html?orderId=' + json.result.orderId
