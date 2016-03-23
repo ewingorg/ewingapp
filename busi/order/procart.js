@@ -6,6 +6,7 @@ var self = this;
 var pListIsEnd = false;
 var curPage = 1;
 
+
 //页面初始化
 mui.init({
 	swipeBack: true, //启用右滑关闭功能
@@ -30,6 +31,7 @@ function alalyseTotal() {
 		});
 	}
 }
+
 
 function init() {
 	var balanceBtn = document.getElementById('balanceBtn');

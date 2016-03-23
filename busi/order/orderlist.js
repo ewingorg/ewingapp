@@ -35,108 +35,121 @@ function load(status) {
 			pageSize: pageSize
 		}
 	};
-	ajax.jsonpSyncRequest("order/list.action", requestJson, function(json) {
-		if (json.length == 0) {
-			return false;
+	
+	ajax.jsonpSyncFetch("order/list.action", requestJson, 'renderOrderList');
+}
+
+function renderOrderList(json) {
+	if (json.length == 0) {
+		return false;
+	}
+
+	if (json.result.list == null) {
+		return false;
+	}
+
+	$("#showOrderList").html('');
+	var list = json.result.list;
+	for (var i = 0; i < list.length; i++) {
+		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML = '';
+		$("#tmp").html('');
+		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#orderHeaderLi"), list[i]).html();
+		$("#tmp").html('');
+		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#orderLi"), list[i].list).html();
+		$("#tmp").html('');
+		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#productCountLi"), list[i]).html();
+		$("#tmp").html('');
+		$("#tmp").loadTemplate($("#btnLi"), list[i]).html()
+
+		var status = list[i].status;
+		//设置按钮显示与否 refundOrder
+		if ('0' == status || '4' == status) {
+			document.getElementById('tmp').querySelector('.closeOrder').style.display = "inline";
+		} else {
+			document.getElementById('tmp').querySelector('.closeOrder').style.display = "none";
+		}
+		if ('1' == status || '2' == status || '3' == status || '4' == status) {
+			document.getElementById('tmp').querySelector('.seeExpress').style.display = "inline";
+		} else {
+			document.getElementById('tmp').querySelector('.seeExpress').style.display = "none";
+		}
+		if ('0' == status) {
+			document.getElementById('tmp').querySelector('.payOrder').style.display = "inline";
+		} else {
+			document.getElementById('tmp').querySelector('.payOrder').style.display = "none";
+		}
+		if('2' == status || '4' == status){
+			document.getElementById('tmp').querySelector('.refundOrder').style.display = "inline";
+		} else {
+			document.getElementById('tmp').querySelector('.refundOrder').style.display = "none";
 		}
 
-		if (json.result.list == null) {
-			return false;
-		}
+		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").html();
 
-		$("#showOrderList").html('');
-		var list = json.result.list;
-		for (var i = 0; i < list.length; i++) {
-			document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML = '';
-			$("#tmp").html('');
-			document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#orderHeaderLi"), list[i]).html();
-			$("#tmp").html('');
-			document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#orderLi"), list[i].list).html();
-			$("#tmp").html('');
-			document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").loadTemplate($("#productCountLi"), list[i]).html();
-			$("#tmp").html('');
-			$("#tmp").loadTemplate($("#btnLi"), list[i]).html()
+		$("#showOrderList").append($("#orderLiDiv").html());
+	}
 
-			var status = list[i].status;
-			//设置按钮显示与否
-			if ('0' == status || '4' == status) {
-				document.getElementById('tmp').querySelector('.closeOrder').style.display = "inline";
-			} else {
-				document.getElementById('tmp').querySelector('.closeOrder').style.display = "none";
-			}
-			if ('1' == status || '2' == status || '3' == status || '4' == status) {
-				document.getElementById('tmp').querySelector('.seeExpress').style.display = "inline";
-			} else {
-				document.getElementById('tmp').querySelector('.seeExpress').style.display = "none";
-			}
-			if ('0' == status) {
-				document.getElementById('tmp').querySelector('.payOrder').style.display = "inline";
-			} else {
-				document.getElementById('tmp').querySelector('.payOrder').style.display = "none";
-			}
-
-			document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").html();
-
-			$("#showOrderList").append($("#orderLiDiv").html());
-		}
-
-		var resImgs = document.body.querySelectorAll('.resImg');
-		for (var i = 0; i < resImgs.length; i++) {
-			resImgs[i].addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'prodetail',
-					url: '../prodetail.html?pId=' + this.getAttribute("resId")
-				});
+	var resImgs = document.body.querySelectorAll('.resImg');
+	for (var i = 0; i < resImgs.length; i++) {
+		resImgs[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'prodetail',
+				url: '../prodetail.html?pId=' + this.getAttribute("resId")
 			});
-		}
+		});
+	}
 
-		//注册事件
-		var cancalBtns = document.body.querySelectorAll('.closeOrder');
-		for (var i = 0; i < cancalBtns.length; i++) {
-			cancalBtns[i].addEventListener('tap', function() {
-				var requestJson = {
-					data: {
-						orderId: this.getAttribute('orderId')
-					}
-				};
+	//注册事件
+	var cancalBtns = document.body.querySelectorAll('.closeOrder');
+	for (var i = 0; i < cancalBtns.length; i++) {
+		cancalBtns[i].addEventListener('tap', function() {
+			var requestJson = {
+				data: {
+					orderId: this.getAttribute('orderId')
+				}
+			};
 
-				ajax.jsonpSyncRequest("order/close.action", requestJson, function(json) {
-					if (json.length == 0) {
-						return false;
-					}
+			ajax.jsonpSyncFetch("order/close.action", requestJson, 'cancelOrder');
+		});
+	}
 
-					self.load(status);
-				});
+	var payBtns = document.body.querySelectorAll('.payOrder');
+	for (var i = 0; i < payBtns.length; i++) {
+		payBtns[i].addEventListener('tap', function() {
+			var requestJson = {
+				data: {
+					orderId: this.getAttribute('orderId')
+				}
+			};
+
+			ajax.jsonpSyncFetch("order/close.action", requestJson, 'closeOrder');
+		});
+	}
+
+	var expressBtns = document.body.querySelectorAll('.seeExpress');
+	for (var i = 0; i < expressBtns.length; i++) {
+		expressBtns[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'express',
+				url: '../express/express.html?orderId=' + this.getAttribute("orderId") + "&cargoName=" + this.getAttribute("cargoName") + "&cargoNumber=" + this.getAttribute("cargoNumber"),
 			});
-		}
+		})
+	}
+}
 
-		var payBtns = document.body.querySelectorAll('.payOrder');
-		for (var i = 0; i < payBtns.length; i++) {
-			payBtns[i].addEventListener('tap', function() {
-				var requestJson = {
-					data: {
-						orderId: this.getAttribute('orderId')
-					}
-				};
+function cancelOrder(json) {
+	if (json.length == 0) {
+		return false;
+	}
 
-				ajax.jsonpSyncRequest("order/close.action", requestJson, function(json) {
-					if (json.length == 0) {
-						return false;
-					}
+	self.load(status);
+}
 
-					self.load(status);
-				});
-			});
-		}
 
-		var expressBtns = document.body.querySelectorAll('.seeExpress');
-		for (var i = 0; i < expressBtns.length; i++) {
-			expressBtns[i].addEventListener('tap', function() {
-				mui.openWindow({
-					id: 'express',
-					url: '../express/express.html?orderId=' + this.getAttribute("orderId") + "&cargoName=" + this.getAttribute("cargoName") + "&cargoNumber=" + this.getAttribute("cargoNumber"),
-				});
-			})
-		}
-	});
+function closeOrder(json) {
+	if (json.length == 0) {
+		return false;
+	}
+
+	self.load(status);
 }
