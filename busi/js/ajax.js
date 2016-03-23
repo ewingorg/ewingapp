@@ -1,8 +1,8 @@
 if (!this.ajax) {
 	var ajax = {};
 }
-var serverUrl = "http://127.0.0.1/ewingdoor/";
-/*var serverUrl = "http://100.84.89.236:8080/ewingdoor/";*/
+//var serverUrl = "http://127.0.0.1/ewingdoor/";
+var serverUrl = "http://127.0.0.1:8080/ewingdoor/";
 
 ajax.jsonpSyncRequest = function(methodUrl, json, sucFn, errFn) {
 
@@ -22,6 +22,8 @@ ajax.jsonpSyncRequest = function(methodUrl, json, sucFn, errFn) {
 	});
 }
 
+ 
+
 ajax.jsonpSyncFetch = function(methodUrl, json, jsonpCallback) {
 
 	var dataListJson = JSON.stringify(json);
@@ -38,3 +40,10 @@ ajax.jsonpSyncFetch = function(methodUrl, json, jsonpCallback) {
 		 
 	});
 }
+
+ajax.jsonpCallback = function(json,callbackFn){
+	// do some interception here....
+	var jsonstr = JSON.stringify(json); 
+	eval(callbackFn+"("+jsonstr+")");
+}
+ 
