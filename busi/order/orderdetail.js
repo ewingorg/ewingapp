@@ -96,6 +96,16 @@ function renderOrder(json) {
 			});
 		});
 	}
+	
+	var refundBtns = document.body.querySelectorAll('.refundBtn');
+	for (var i = 0; i < refundBtns.length; i++) {
+		refundBtns[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'applyrefund',
+				url: 'applyrefund.html?detailId=' + this.getAttribute("detailId")
+			});
+		});
+	}
 }
 
 function submitOrder(json) {
