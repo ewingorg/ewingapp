@@ -18,8 +18,9 @@ function init() {
 	var aItems = document.querySelectorAll('.mui-control-item');
 	for (var i = 0; i < aItems.length; i++) {
 		aItems[i].addEventListener('tap', function() {
+			$("#showOrderList").html('');
+			
 			status = this.getAttribute('status');
-
 			self.load(status);
 		});
 	}
@@ -85,8 +86,20 @@ function renderOrderList(json) {
 		}
 
 		document.getElementById('orderLiDiv').querySelector('.mui-table-view').innerHTML += $("#tmp").html();
+		document.getElementById('orderLiDiv').querySelector('ul').setAttribute('orderId', list[i].id);
 
 		$("#showOrderList").append($("#orderLiDiv").html());
+	}
+	
+	//注册事件
+	var orderDetails = document.body.querySelectorAll('.orderInfo');
+	for(var i=0; i<orderDetails.length; i++){
+		orderDetails[i].addEventListener('tap', function() {
+			mui.openWindow({
+				id: 'orderdetail',
+				url: 'orderdetail.html?orderId=' + this.getAttribute("orderId")
+			});
+		});
 	}
 
 	var resImgs = document.body.querySelectorAll('.resImg');
@@ -99,7 +112,6 @@ function renderOrderList(json) {
 		});
 	}
 
-	//注册事件
 	var cancalBtns = document.body.querySelectorAll('.closeOrder');
 	for (var i = 0; i < cancalBtns.length; i++) {
 		cancalBtns[i].addEventListener('tap', function() {

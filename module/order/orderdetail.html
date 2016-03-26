@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>海鲜街</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../fonts/css/mui.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="../../fonts/css/app.css" />
+		<link rel="stylesheet" type="text/css" href="../../fonts/css/iconfont.css" />
+		
+		<link href="../../fonts/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../fonts/css/mui.poppicker.css" rel="stylesheet" />
+		
+		<script type="text/html" id="addrLi">
+			<li class="mui-table-view-cell mui-media addrLi" data-template-bind='[{"attribute": "addrId", "value": "id"}]'>
+				<a class="mui-navigate-right">
+					<p> <span data-content="receiver"></span>  <span style="padding-left: 10px;" data-content="phone"></span></p>
+					<p> <span data-content="province"></span>  <span data-content="city"></span>  <span data-content="region"></span>  <span data-content="address"></span></p>
+				</a>
+			</li>
+		</script>
+		
+		<script type="text/html" id="orderUl">
+			<ul class="mui-table-view" >
+					<li class="mui-table-view-cell mui-media">
+						<span class="mui-icon iconfont icon-dianpu" style="margin-right: 10px;"></span><span data-content="shopName"></span> <span style="margin-left: 10px;">&#62;</span>
+					</li>
+					<div class="product orderDiv" data-template-bind='[{"attribute": "detailId", "value": "id"}]'>
+						<li class="mui-table-view-cell mui-media">
+							<div class="mui-left">
+								<img class="mui-pull-left resIcon" style="height: 80px;width: 80px;padding-right: 10px;" data-src="icon" data-template-bind='[{"attribute": "resId", "value": "resourceId"}]'>
+								<p class="detailfront" data-content="productName"></p>
+								<p class='mui-ellipsis' style="padding-top: 10px;">规格：普通包装</p>
+								
+							</div>
+							<div style="float: right;margin-top: -50px;text-align: right;vertical-align: top;">
+								<p>￥<span class="price" data-content="unitPrice"></span></p>
+								<p><button type="button" class="mui-btn refundOrder" data-template-bind='[{"attribute": "orderId", "value": "id"}]'>退货</button></p>
+							</div>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<p>
+								<span>购买数量</span>
+								<span class="mui-numbox" style="float: right;">
+								<!--<button class="mui-btn mui-btn-numbox-minus minusProduct" type="button" >-</button>-->
+								<input class="mui-input-numbox productNum" type="number" readonly="true" data-value="itemCount"/>
+								<!--<button class="mui-btn mui-btn-numbox-plus plusProduct" type="button" >+</button> -->
+								</span>
+							</p>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<p><span>商品金额</span> <span style="float: right;">￥<span class="orderPrice" data-content="totalPrice"></span></span>
+							</p>
+						</li>
+						<li class="mui-table-view-cell mui-media">
+							<p><span>运费</span> <span style="float: right;">￥<span class="cargoFee" data-content="cargoPrice"></span></span>
+							</p>
+						</li>
+					</div>
+				</ul>
+		</script>
+		
+		<script type="text/html" id="payWayLi">
+			<li class="mui-table-view-cell payWay">
+				<a class="mui-navigate-right" data-template-bind='[{"attribute": "payWayId", "value": "value"}]' data-content="msg">
+				</a>
+			</li>
+		</script>
+	</head>
+
+	<body>
+		<style>
+			body {
+				margin: 0;
+				line-height: 1.4;
+				color: #000000;
+				font-size: 14px;
+			}
+			
+			p,
+			span {
+				color: #000000;
+				font-size: 14px;
+			}
+			
+			.mui-control-content {
+				background-color: white;
+				min-height: 215px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			.detailfront {
+				line-height: 1.4;
+				color: #555555;
+				font-size: 16px;
+			}
+			
+			.mui-table-view {
+				margin-top: 20px;
+			}
+			
+			.cartItemfront {
+				color: #555555;
+				padding-right: 20px;
+				font-size: 16px;
+			}
+		</style>
+		
+		<script type="text/html" id="tmp" style="display: none;">
+			
+		</script>
+		
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的订单</h1>
+		</header>
+		
+		<nav class="mui-bar mui-bar-tab">
+
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<div style="float: right;">
+					<span class="cartItemfront">总计:￥<span id="totalPrice"></span></span>
+					<!--<button type="button" class="mui-btn mui-btn-danger" id="confirmBtn"> 提交订单</button>-->
+				</div>
+			</a>
+		</nav>
+		
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<div id='userResult' class="ui-alert"></div>
+			</div>
+			
+			<!-- 订单 -->
+			<div id="order">
+				<ul class="mui-table-view" id="addrUl">
+				</ul>
+				
+				<ul class="mui-table-view mui-table-view-radio" id="payWayUl">
+				</ul>
+				
+				<!--<ul class="mui-table-view mui-table-view-radio" id="expressUl">
+				</ul>-->
+				
+			</div>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../busi/core/ewingdialog.js"></script>
+		<script src="../../js/jquery-1.10.1.min.js"></script>
+		<script src="../../js/jquery.loadTemplate-1.4.4.min.js"></script>
+		<script src="../../busi/js/ajax.js"></script>
+		<script src="../../js/jquery.url.js"></script>
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../busi/order/orderdetail.js"></script>
+
+	</body>
+</html>
