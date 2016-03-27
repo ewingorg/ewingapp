@@ -17,13 +17,41 @@
 				margin: 5px 7px;
 			}
 		</style>
+		
+		<script type="text/html" id="formDiv">
+			<div class="mui-input-row">
+				<label>退货类型</label>
+				<select class="prov" id="refundType">
+						<option value="0">退货退款（已发货情况）</option>
+						<option value="1">仅退款（未发货情况）</option>
+				</select>
+			</div>
+			<div class="mui-input-row">
+				<label>退货金额</label>
+				<input type="text" class="mui-input-clear" placeholder="" data-value="refundMoney" id="refundMoney" readonly='true'>
+			</div>
+			<div class="mui-input-row">
+				<label>退货原因</label>
+				<select class="prov" id='reasonType'>
+						<option value="1">颜色差</option>
+				</select>
+			</div>
+			<div class="mui-input-row">
+				<label>原因</label>
+				<textarea rows="5" id="reason"></textarea>
+			</div>
+			<div class="mui-input-row">
+				<label>上传凭证</label>
+				<input type="text" class="mui-input-clear" placeholder="" id="picUrl">
+			</div>
+		</script>
 	</head>
 
 	<body>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item" href="#tabbar-with-map">
 				<div style="text-align: center;">
-					<span><button type="button" class="mui-btn mui-btn-grey" id="addAddress">申请退货</button></span>
+					<span><button type="button" class="mui-btn mui-btn-grey" id="applyRefund">申请退货</button></span>
 				</div>
 			</a>
 		</nav>
@@ -34,32 +62,8 @@
 
 		<div class="mui-content">
 			<div class="mui-content-padded" style="margin: 5px;">
-				<form class="mui-input-group">
-					<div class="mui-input-row">
-						<label>退货类型</label>
-						<select class="prov">
-								<option value="">退货退款（已发货情况）</option>
-								<option value="">退款（未发货情况）</option>
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label>退货金额</label>
-						<input type="text" class="mui-input-clear" placeholder="" data-value="address" id="address">
-					</div>
-					<div class="mui-input-row">
-						<label>退货原因</label>
-						<select class="prov">
-								<option value="">颜色差</option>
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label>原因</label>
-						<textarea rows="5"></textarea>
-					</div>
-					<div class="mui-input-row">
-						<label>上传凭证</label>
-						<input type="text" class="mui-input-clear" placeholder="" data-value="address" id="address">
-					</div>
+				<form class="mui-input-group" id="refundForm">
+					
 				</form>
 			</div>
 		</div>
@@ -70,7 +74,7 @@
 		<script src="../../busi/js/ajax.js"></script>
 		<script src="../../js/jquery.url.js"></script>
 		<script src="../../busi/core/ewingdialog.js"></script>
-		<script src="../../busi/address/address.js"></script>
+		<script src="../../busi/order/applyrefund.js"></script>
 	</body>
 
 </html>
