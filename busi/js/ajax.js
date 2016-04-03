@@ -1,7 +1,7 @@
 if (!this.ajax) {
 	var ajax = {};
 }
-var serverUrl = "http://127.0.0.1/ewingdoor/";
+var serverUrl = "http://127.0.0.1:8080/ewingdoor/";
 //var serverUrl = "http://120.25.210.50/ewingdoor/";
 /*var serverUrl = "http://127.0.0.1:8080/ewingdoor/";*/
 
@@ -23,11 +23,13 @@ ajax.jsonpSyncRequest = function(methodUrl, json, sucFn, errFn) {
 	});
 }
 
-ajax.jsonpSyncFetch = function(methodUrl, json, jsonpCallback) {
+ajax.jsonpSyncFetch = function(methodUrl, json, random, jsonpCallback) {
 	var dataListJson = JSON.stringify(json);
 	$.ajax({
 		data: {
-			param: dataListJson
+			param: dataListJson,
+			curUrl : window.location.href,
+			cookie : $.cookie('_u_c')
 		},
 		type: "get",
 		async: false,
@@ -40,6 +42,15 @@ ajax.jsonpSyncFetch = function(methodUrl, json, jsonpCallback) {
 }
 
 ajax.jsonpCallback = function(json,callbackFn){
+	
+	if(null != json && null != json.cookies){
+		var now = new Date();
+		for(var i = 0; i<json.cookies.length; i++){
+			var cookie = json.cookies[i];
+			$.cookie(cookie.name, cookie.value, {expires:(now.getTime() + cookie.maxValue * 1000), path: cookie.path}); 
+		}
+	}
+	
 	if(null != json && json.respType == 2){
 		window.location = json.result;
 	}else{

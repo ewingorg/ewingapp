@@ -1,6 +1,8 @@
 //获取页面传来的参数
 var self = this;
 var shopId = jQuery.url.param("shopId");
+var random = Math.random();
+
 //是否没有数据
 var pListIsEnd = false;
 //产品页码
@@ -145,7 +147,7 @@ function pullupRefresh() {
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncFetch("product/indexList.action", requestJson, "fillProductList");
+	ajax.jsonpSyncFetch("product/indexList.action", requestJson, random, "fillProductList");
 }
 
 function initCategorySelect() {
@@ -154,7 +156,7 @@ function initCategorySelect() {
 			shopId: shopId
 		}
 	};
-	ajax.jsonpSyncFetch("product/category.action", requestJson, "fillCategory");
+	ajax.jsonpSyncFetch("product/category.action", requestJson, random, "fillCategory");
 	//主界面‘显示侧滑菜单’按钮的点击事件
 	//侧滑容器父节点
 	var offCanvasWrapper = mui('#offCanvasWrapper');

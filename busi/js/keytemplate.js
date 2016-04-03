@@ -33,6 +33,8 @@ keytemplate.callback=function(json){
 		}
 }
 
+var random = Math.random();
+
 keytemplate.initTemplateKey = function(shopId,templateName) {
 
 	var requestJson = {
@@ -42,5 +44,5 @@ keytemplate.initTemplateKey = function(shopId,templateName) {
 		}
 	};
 	
-	ajax.jsonpSyncFetch("web/templateKey.action", requestJson, "keytemplate.callback");
+	ajax.jsonpSyncFetch("web/templateKey.action", requestJson, random, "keytemplate.callback");
 }
