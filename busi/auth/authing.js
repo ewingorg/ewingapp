@@ -12,7 +12,7 @@ function init(){
 			state: state
 		}
 	};
-	ajax.jsonpSyncFetch("apiwx/getAuthCode.action", requestJson, random, "renderFunc");
+	ajax.jsonpSyncFetch("apiwx/getAuthCode.action", requestJson, "renderFunc");
 }
 
 function renderFunc(json){

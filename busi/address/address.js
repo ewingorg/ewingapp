@@ -80,7 +80,7 @@ function addAddr(json) {
 	//@TODO修改userId的值
 	mui.openWindow({
 		id: 'addresslist',
-		url: 'addresslist.html?userId=10'
+		url: 'addresslist.html'
 	});
 }
 
