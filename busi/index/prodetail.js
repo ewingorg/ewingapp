@@ -154,6 +154,7 @@ function addCart(json) {
 }
 
 function addOrder(json) {
+	console.log(json);
 	if (null == json.result.orderId || '' == json.result.orderId) {
 		mui.toast("提交失败");
 		return;
