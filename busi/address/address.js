@@ -1,3 +1,4 @@
+var orderId = jQuery.url.param("orderId");
 //获取页面传来的参数
 //页面初始化
 mui.init({
@@ -48,11 +49,12 @@ document.getElementById("addAddress").addEventListener('tap', function() {
 		ewing.alert("提示", "详细地址不能为空哦", null);
 		return;
 	}
-	
+
 	$("#addAddress").attr("disabled", true);
 
 	var requestJson = {
 		data: {
+			orderId : orderId,
 			id: jQuery.url.param("addId"),
 			receiver: $("#receiver").val(),
 			phone: $("#phone").val(),
@@ -67,21 +69,27 @@ document.getElementById("addAddress").addEventListener('tap', function() {
 });
 
 function addAddr(json) {
-	if (null == json || '' == json) {
-		$("#addAddress").attr("disabled", flase);
-		return false;
-	}
-	
-	if(json.result != 2000000){
+	if (null == json || '' == json || null == json.result) {
 		$("#addAddress").attr("disabled", flase);
 		return false;
 	}
 
-	//@TODO修改userId的值
-	mui.openWindow({
-		id: 'addresslist',
-		url: 'addresslist.html'
-	});
+	if (json.result.code != 2000000) {
+		$("#addAddress").attr("disabled", false);
+		return false;
+	}
+
+	if (null != json.result.orderId) {
+		mui.openWindow({
+			id: 'order',
+			url: '../order/order.html?orderId=' + json.result.orderId
+		});
+	} else {
+		mui.openWindow({
+			id: 'addresslist',
+			url: 'addresslist.html'
+		});
+	}
 }
 
 /**

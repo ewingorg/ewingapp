@@ -19,7 +19,6 @@ function prepareAddrSelector(data) {
 			showUserPickerButton.addEventListener('tap', function(event) {
 				userPicker.show(function(items) {
 					$("#addrUl").html('');
-					console.log(items[0]);
 					$("#addrUl").loadTemplate($("#addrLi"), addrList[items[0].value]);
 					$("#addrUl").attr('addrId', addrList[items[0].value].id);
 
@@ -46,7 +45,6 @@ function renderOrder(json) {
 
 	$("#addrUl").loadTemplate($("#addrLi"), json.result.defaultAddr);
 	$("#payWayUl").loadTemplate($("#payWayLi"), json.result.payWays);
-	console.log(json.result.payWays);
 
 	for (var i = 0; i < json.result.list.length; i++) {
 		$("#tmp").html('');
@@ -123,24 +121,32 @@ function renderOrder(json) {
 
 		var requestJson = {
 			data: {
+				orderId : orderId,
 				addrId: $("#addrUl").find('li').attr('addrId'),
 				payWayId: payWayLi.find('a').attr("paywayid"),
 				list: items
 			}
 		};
 
-		console.log(requestJson);
 		ajax.jsonpSyncFetch("order/commitOrder.action", requestJson, 'submitOrder');
 	});
 }
 
 function submitOrder(json) {
-	if (json.length == 0) {
+	if (null == json || null == json.result) {
 		return false;
 	}
 
-	//开始支付界面
-	if (json.result == 2000000) {
+	if (json.success == true) {
+		if(json.result == 6100001){
+			ewing.alert("提示", "请设置地址", null);
+			mui.openWindow({
+				id: 'address',
+				url: '../address/address.html?orderId=' + orderId
+			});
+		}
+		
+		//开始支付界面
 
 	}
 }
